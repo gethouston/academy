@@ -1,0 +1,15 @@
+{
+  "name": "houston-academy",
+  "description": "Houston Academy: learn to build real software with AI agents, without writing code.",
+  "owner": {
+    "name": "Houston",
+    "url": "https://gethouston.ai"
+  },
+  "plugins": [
+    {
+      "name": "academy",
+      "source": "./plugins/academy",
+      "description": "Your Houston Academy tutor: plain-words explanations, slice planning, course checks, and red-flag guards."
+    }
+  ]
+}

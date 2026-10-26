@@ -1,0 +1,88 @@
+name: CI
+
+# Checks every push and PR: the site builds, every page exists in English and
+# Spanish, and the tutor's red-flag hooks behave. On main, also deploys the site
+# to Firebase Hosting (project gethouston, site gethouston-academy) once the repo
+# variables GCP_WIF_PROVIDER and GCP_DEPLOY_SA are set (a Workload Identity
+# provider limited to gethouston/academy, and a service account that can only
+# deploy Firebase Hosting). Without them the deploy job is skipped; deploy by
+# hand with `npm run deploy` in site/.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Build, locales, tutor hooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Every page in English and Spanish
+        working-directory: site
+        run: npm run check:locales
+
+      - name: Build site
+        working-directory: site
+        run: npm run build
+
+      - name: Tutor hook tests
+        run: plugins/academy/tests/test-hooks.sh
+
+      - uses: actions/upload-artifact@v7
+        if: github.event_name != 'pull_request'
+        with:
+          name: site
+          path: site/dist
+
+  deploy:
+    name: Deploy to Firebase Hosting
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.GCP_WIF_PROVIDER != '' && vars.GCP_DEPLOY_SA != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Workload Identity Federation
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: site/dist
+
+      - name: Auth to GCP
+        id: gcp
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+          token_format: access_token
+
+      - name: Deploy
+        working-directory: site
+        run: npm run deploy
+        env:
+          GOOGLE_OAUTH_ACCESS_TOKEN: ${{ steps.gcp.outputs.access_token }}
+          DEPLOY_MESSAGE: ${{ github.sha }}
