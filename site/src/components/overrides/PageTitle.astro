@@ -1,0 +1,45 @@
+---
+// Lesson and course pages get a breadcrumb above the title, so you always know where you are.
+// Starlight links the "skip to content" and table-of-contents top to this id.
+const PAGE_TITLE_ID = '_top';
+import { courseHref, langOf, locate, program, ui } from '~/data/program';
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+const here = locate(Astro.locals.starlightRoute.id);
+const level = here && program.find((l) => l.courses.includes(here.course));
+const base = lang === 'es' ? '/es' : '';
+---
+{
+	here && (
+		<nav class="ha-crumbs" aria-label="Breadcrumb">
+			<a href={`${base}/program/`}>{t.program}</a>
+			<span aria-hidden="true">›</span>
+			{here.lesson ? (
+				<>
+					<a href={courseHref(here.course, lang)}>
+						{t.course} {here.course.number} · {here.course.title[lang]}
+					</a>
+					<span aria-hidden="true">›</span>
+					<span>
+						{t.lesson} {here.index + 1} {t.of} {here.course.lessons.length}
+					</span>
+				</>
+			) : (
+				<span>
+					{t.level} {level?.number} · {t.course} {here.course.number}
+				</span>
+			)}
+		</nav>
+	)
+}
+<h1 id={PAGE_TITLE_ID}>{here && !here.lesson ? `${here.course.number} · ${here.course.title[lang]}` : Astro.locals.starlightRoute.entry.data.title}</h1>
+
+<style>
+	h1 {
+		margin-top: 1rem;
+		font-size: var(--sl-text-h1);
+		line-height: var(--sl-line-height-headings);
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+</style>

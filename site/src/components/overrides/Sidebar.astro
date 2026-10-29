@@ -1,0 +1,78 @@
+---
+// The sidebar is the program map: a few top links, then every course in order. The course
+// you're in opens to show its lessons, with checkmarks for the ones you've completed.
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import { available, courseHref, isOpen, langOf, lessonHref, lessonKey, locate, program, ui } from '~/data/program';
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+const id = Astro.locals.starlightRoute.id;
+const here = locate(id);
+const base = lang === 'es' ? '/es' : '';
+const top = [
+	{ href: `${base}/how-it-works/`, label: t.howItWorks, current: id.endsWith('how-it-works') },
+	{ href: `${base}/program/`, label: t.program, current: id.endsWith('program') },
+	{ href: `${base}/glossary/`, label: t.glossary, current: id.endsWith('glossary') },
+];
+---
+<nav class="ha-side" aria-label={t.program}>
+	<ul class="ha-side-top">
+		{top.map((l) => <li><a href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a></li>)}
+	</ul>
+	{
+		program.map((level) => (
+			<div class="ha-side-level">
+				<p class="ha-level-label">{t.level} {level.number} · {level.title[lang]}</p>
+				<ul>
+					{level.courses.map((course) => {
+						const open = isOpen(course);
+						const inside = here?.course === course;
+						const keys = available(course).map((l) => lessonKey(course, l)).join(' ');
+						return (
+							<li class:list={['ha-side-course', { 'is-soon': !open, 'is-here': inside }]} data-progress-keys={open ? keys : undefined}>
+								{open ? (
+									<a href={courseHref(course, lang)} aria-current={inside && !here?.lesson ? 'page' : undefined}>
+										<span class="ha-side-num">{course.number}</span>
+										<span>{course.title[lang]}</span>
+									</a>
+								) : (
+									<span class="ha-side-row">
+										<span class="ha-side-num">{course.number}</span>
+										<span>{course.title[lang]}</span>
+									</span>
+								)}
+								{inside && (
+									<ol class="ha-side-lessons">
+										{course.lessons.map((lesson, i) =>
+											lesson.slug ? (
+												<li data-lesson-key={lessonKey(course, lesson)}>
+													<a href={lessonHref(course, lesson, lang)} aria-current={here?.lesson === lesson ? 'page' : undefined}>
+														<span class="ha-check" aria-hidden="true">{i + 1}</span>
+														<span>{lesson.title[lang]}</span>
+													</a>
+												</li>
+											) : (
+												<li class="is-soon">
+													<span class="ha-side-row">
+														<span class="ha-check" aria-hidden="true">{i + 1}</span>
+														<span>{lesson.title[lang]}</span>
+													</span>
+												</li>
+											),
+										)}
+									</ol>
+								)}
+							</li>
+						);
+					})}
+				</ul>
+			</div>
+		))
+	}
+</nav>
+<div class="md:sl-hidden">
+	<MobileMenuFooter />
+</div>
+<script>
+	import { init } from '../nav/progress';
+	init();
+</script>

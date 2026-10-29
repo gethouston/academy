@@ -18,7 +18,7 @@ export default defineConfig({
       },
       logo: { src: "./src/assets/houston-icon.png", alt: "Houston" },
       favicon: "/favicon.png",
-      customCss: ["./src/styles/houston.css"],
+      customCss: ["./src/styles/houston.css", "./src/styles/navigation.css"],
       head: [
         {
           tag: "link",
@@ -33,55 +33,24 @@ export default defineConfig({
         },
       ],
       social: [
+        { icon: "x.com", label: "X: @ja818_", href: "https://x.com/ja818_" },
         {
           icon: "github",
           label: "GitHub",
           href: "https://github.com/gethouston/academy",
         },
       ],
+      // The sidebar, breadcrumbs and lesson navigation are drawn from src/data/program.ts.
+      components: {
+        Sidebar: "./src/components/overrides/Sidebar.astro",
+        PageTitle: "./src/components/overrides/PageTitle.astro",
+        Pagination: "./src/components/overrides/Pagination.astro",
+        Footer: "./src/components/overrides/Footer.astro",
+      },
       sidebar: [
-        {
-          label: "Start here",
-          translations: { es: "Empieza aquí" },
-          items: [
-            {
-              slug: "start",
-              label: "How the Academy works",
-              translations: { es: "Cómo funciona la Academy" },
-            },
-            {
-              slug: "start/program",
-              label: "The program",
-              translations: { es: "El programa" },
-            },
-          ],
-        },
-        {
-          label: "Course 0 · Hello, internet",
-          translations: { es: "Curso 0 · Hola, internet" },
-          items: [{ autogenerate: { directory: "course-0" } }],
-        },
-        {
-          label: "Course 1 · How software works",
-          translations: { es: "Curso 1 · Cómo funciona el software" },
-          items: [{ autogenerate: { directory: "course-1" } }],
-        },
-        {
-          label: "Course 2 · Think like a builder",
-          translations: { es: "Curso 2 · Piensa como constructor" },
-          items: [{ autogenerate: { directory: "course-2" } }],
-        },
-        {
-          label: "Reference",
-          translations: { es: "Referencia" },
-          items: [
-            {
-              slug: "glossary",
-              label: "Glossary",
-              translations: { es: "Glosario" },
-            },
-          ],
-        },
+        { slug: "how-it-works" },
+        { slug: "program" },
+        { slug: "glossary" },
       ],
     }),
   ],

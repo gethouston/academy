@@ -1,0 +1,13 @@
+---
+// Lesson navigation, then who made this.
+import Pagination from 'virtual:starlight/components/Pagination';
+import { creator, langOf, ui } from '~/data/program';
+const t = ui[langOf(Astro.currentLocale)];
+---
+<footer class="ha-footer">
+	<Pagination />
+	<p class="ha-credit">
+		{t.createdBy} <a href={creator.url}>{creator.name}</a> · <a href={creator.url}>{t.follow}: {creator.handle}</a> ·
+		Houston Academy · <a href="https://gethouston.ai">gethouston.ai</a>
+	</p>
+</footer>

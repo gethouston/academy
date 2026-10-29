@@ -6,14 +6,18 @@ hero:
   tagline: Construye software real, listo para producción, con agentes de IA y sin escribir una sola línea de código. Gratis y de código abierto, en español e inglés.
   actions:
     - text: Empieza tu primera hora
-      link: /es/course-0/
+      link: /es/courses/hello-internet/set-up-your-workbench/
       icon: right-arrow
     - text: Cómo funciona
-      link: /es/start/
+      link: /es/how-it-works/
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import ContinueCard from '~/components/nav/ContinueCard.astro';
+import CourseMap from '~/components/nav/CourseMap.astro';
+
+<ContinueCard />
 
 ## Escribir código ya no es lo difícil
 
@@ -37,3 +41,7 @@ Hoy los agentes de IA escriben el código. Lo que todavía frena a la gente es t
 ## Para quién es
 
 Product managers, diseñadores, gente de operaciones, fundadores: cualquier persona con una idea y sin formación técnica. Si una terminal te asusta, buena noticia: no la vas a necesitar.
+
+## El camino
+
+<CourseMap />
