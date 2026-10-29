@@ -13,7 +13,7 @@
 - **No terminal at the start:** learners work in the **Claude desktop app**, with chat, a live preview pane, and buttons for permissions, diffs and PRs. Complexity grows in steps: chat → *reading* what the agent runs → the terminal (optional) in the last level.
 - **The agent tutors:** the `academy` plugin runs inside the learner's own Claude sessions. It explains what just happened in their language, stops on red flags, and **checks each project by probing the live app**, not by grading code.
 - **Bilingual from day one:** every lesson is written in both English and Spanish, with a shared glossary. It isn't machine-translated afterwards.
-- **Platform:** Astro + Starlight (i18n built in), in its own open-source repo (`gethouston/academy`), on Firebase Hosting on GCP at `academy.gethouston.ai`. Certificates reuse Houston's existing certificate system.
+- **Platform:** Astro + MDX + Tailwind, with a clean layout modeled on The Odin Project (landing, course summary, lesson), in its own open-source repo (`gethouston/academy`), on Firebase Hosting on GCP at `academy.gethouston.ai`. Certificates reuse Houston's existing certificate system.
 - **Why it exists:** distribution for Houston. The way it gets there: be the best free resource for this audience, with Houston as one elective and one capstone option, not an ad on every page.
 - **First milestone:** a bilingual pilot of Course 0 (first hour) and the first lessons of Courses 1 and 2, tested with 5 non-technical people, who could come from the Houston bootcamp alumni.
 
@@ -271,7 +271,7 @@ The skills follow the Agent Skills format (`SKILL.md`), the same convention Hous
 
 ## 6. Languages
 
-- **Both languages are first-class:** every lesson lives as an `en` and an `es` file side by side (Starlight i18n), and ships in both or not at all. A check in CI flags any lesson that exists in only one language.
+- **Both languages are first-class:** every lesson lives as an `en` and an `es` file side by side (`site/src/content/courses/en` and `/es`), and ships in both or not at all. A check in CI flags any lesson that exists in only one language.
 - **Workflow:** written in one language → the agent drafts the other → a **native speaker edits** it (it isn't published as a raw machine translation). Houston already works this way for its app and site (`check-locales`).
 - **One shared glossary** (`glossary.en/es`) decides each term. Rule: teach the English term as well, because the tools are in English. Example: "*desplegar* (deploy)", "*clave de API* (API key)".
 - **The tutor speaks the learner's language:** `start` asks once and writes the choice into `CLAUDE.md`.
@@ -281,10 +281,10 @@ The skills follow the Agent Skills format (`SKILL.md`), the same convention Hous
 
 ## 7. The platform
 
-**Decision: Astro + Starlight, in its own open-source repo (`gethouston/academy`), deployed to `academy.gethouston.ai` on Firebase Hosting in the `gethouston` GCP project (the same setup gethouston.ai uses).**
+**Decision: Astro + MDX + Tailwind, in its own open-source repo (`gethouston/academy`), deployed to `academy.gethouston.ai` on Firebase Hosting in the `gethouston` GCP project (the same setup gethouston.ai uses).**
 
 - **Simple:** a static site with no server, database or accounts. It costs close to nothing and there's very little to break.
-- **Built for this:** Starlight has navigation, search, dark mode and **i18n with locale routing** built in. MDX lessons can embed interactive React/SVG diagrams and replay players as Astro islands, which load only where they're used.
+- **Clean, like The Odin Project:** three screens do the work: a landing page, a course summary (sections of lessons), and a lesson page (course lessons on the left, a narrow reading column, "Lesson contents" on the right, Mark complete and Next at the bottom). We started on Starlight and dropped it: its docs layout was too crowded for beginners. MDX lessons embed the interactive SVG diagrams, which load only where they're used. Progress is kept in the browser.
 - **Open source suits the goal:** it lives in its own public repo, so content and translations come in as PRs, Julian's agents can write lessons in parallel, and learners can fork it. License: **CC BY-SA 4.0 for content** (people can reuse it, with credit and on the same terms), **MIT for code and the plugin**.
 - **Fits Houston:** a subdomain of gethouston.ai; it reuses Houston's design tokens and links to the existing **certificate system** on gethouston.ai (claim and verify pages) instead of building a new one.
 - **Progress:** kept in the browser (localStorage), plus the `/academy:check` report. If accounts are ever needed, Houston's login can be added later.
@@ -373,7 +373,7 @@ Sizes assume Julian plus parallel agents, part-time: **S** ≈ 1–3 days · **M
 
 | Piece | State |
 |---|---|
-| Site skeleton (Astro 7.3.8 + Starlight 0.42.6, en at `/`, es at `/es/`, Houston look) | ✅ in `site/` |
+| Site (Astro 7.3.8 + MDX + Tailwind 4, Odin-like layout, en at `/`, es at `/es/`) | ✅ in `site/` |
 | Lesson components: prompt card, red flag, checklist, illustrative agent session, explain-back | ✅ |
 | Interactive diagrams: two computers (publish), API waiter, API key card, GTA 6 slices | ✅ both languages, light and dark |
 | Course 0, all 4 lessons + overview | ✅ en + es |

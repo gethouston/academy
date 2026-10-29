@@ -1,0 +1,54 @@
+---
+import Base from '~/layouts/Base.astro';
+import Badge from '~/components/site/Badge.astro';
+import { available, courseHref, isOpen, langOf, lessonKey, program, ui } from '~/data/program';
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+---
+<Base title={t.curriculum} description={t.curriculumLead}>
+	<div class="mx-auto max-w-3xl px-4 py-16">
+		<div class="text-center">
+			<h1 class="text-3xl font-medium text-gray-800">{t.curriculum}</h1>
+			<p class="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">{t.curriculumLead}</p>
+			<p class="mx-auto mt-3 max-w-2xl text-sm text-gray-500">{t.pilot}</p>
+		</div>
+		{
+			program.map((level) => (
+				<section class="mt-14">
+					<h2 class="text-sm font-semibold tracking-wide text-gray-500 uppercase">
+						{t.level} {level.number} · {level.title[lang]}
+					</h2>
+					<ol class="mt-4 space-y-4">
+						{level.courses.map((course) => {
+							const open = isOpen(course);
+							const keys = available(course).map((l) => lessonKey(course, l)).join(' ');
+							return (
+								<li class:list={['flex items-center gap-5 rounded-lg bg-white p-5 shadow-sm ring-1 ring-gray-200', { 'opacity-70': !open }]} data-progress-keys={open ? keys : undefined} data-done-label={t.done}>
+									<Badge number={course.number} soon={!open} />
+									<div class="min-w-0 flex-1">
+										<h3 class:list={['text-lg font-medium', open ? 'text-gray-800' : 'text-gray-500']}>
+											{open ? <a href={courseHref(course, lang)} class="hover:underline">{course.title[lang]}</a> : course.title[lang]}
+										</h3>
+										<p class="mt-1 text-sm leading-6 text-gray-600">{course.ship[lang]}</p>
+										{open && (
+											<div class="mt-3 flex items-center gap-3">
+												<div class="ha-bar h-1.5 max-w-48 flex-1 overflow-hidden rounded-full bg-gray-200"><div class="ha-bar-fill h-full w-0 rounded-full bg-accent" /></div>
+												<span class="text-xs text-gray-500" data-progress-text />
+											</div>
+										)}
+									</div>
+									{open ? (
+										<a href={courseHref(course, lang)} class="btn btn-outline hidden sm:inline-flex">{t.openCourse}</a>
+									) : (
+										<span class="hidden text-sm text-gray-400 sm:inline">{t.comingSoon}</span>
+									)}
+								</li>
+							);
+						})}
+					</ol>
+				</section>
+			))
+		}
+		<p class="mt-12 text-center text-sm text-gray-500">{t.progressNote}</p>
+	</div>
+</Base>

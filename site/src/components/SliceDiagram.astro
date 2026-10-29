@@ -52,7 +52,7 @@ const pieces = Array.from({ length: 24 }, (_, i) => ({
   bad: [2, 7, 11, 15, 20].includes(i),
 }));
 ---
-<figure class="ha-figure not-content" data-stepper data-captions={JSON.stringify(t.captions)}>
+<figure class="ha-figure not-prose" data-stepper data-captions={JSON.stringify(t.captions)}>
 	<div class="ha-svg"><svg viewBox="0 0 720 300" role="img" aria-label={t.captions.join(' ')}>
 		<g data-on="1,2,3">
 			<rect class="box hl" x="20" y="20" width="300" height="80" rx="14" />

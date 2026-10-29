@@ -5,9 +5,9 @@ import { langOf, ui } from "./ui";
 const t = ui[langOf(Astro.currentLocale)];
 const { label } = Astro.props as { label?: string };
 ---
-<div class="ha-prompt not-content">
+<div class="ha-prompt not-prose">
 	<div class="ha-prompt-head">
-		<span>💬 {label ?? t.prompt}</span>
+		<span>{label ?? t.prompt}</span>
 		<button type="button" class="ha-btn" data-copy data-copied={t.copied}>{t.copy}</button>
 	</div>
 	<div class="ha-prompt-text" data-prompt><slot /></div>

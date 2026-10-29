@@ -1,8 +1,18 @@
 import { defineCollection } from "astro:content";
-import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
-import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
 
-export const collections = {
-  docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
-  i18n: defineCollection({ loader: i18nLoader(), schema: i18nSchema() }),
-};
+// Course overviews and lessons: src/content/courses/<en|es>/<course>/<lesson>.mdx
+// (index.mdx is the course overview). Ids look like "en/hello-internet/check-it".
+const courses = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/courses" }),
+  schema: z.object({ title: z.string(), description: z.string() }),
+});
+
+// Standalone pages: src/content/pages/<en|es>/<page>.mdx
+const pages = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/pages" }),
+  schema: z.object({ title: z.string(), description: z.string() }),
+});
+
+export const collections = { courses, pages };

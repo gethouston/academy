@@ -1,0 +1,107 @@
+---
+import Base from '~/layouts/Base.astro';
+import Badge from '~/components/site/Badge.astro';
+import Icon from '~/components/site/Icon.astro';
+import { allLessons, courseHref, courses, isOpen, langOf, lessonHref, lessonKey, prefixOf, ui } from '~/data/program';
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+const h = t.home;
+const base = prefixOf(lang);
+const continueTargets = Object.fromEntries(
+	allLessons.map(({ course, lesson }) => [lessonKey(course, lesson), { href: lessonHref(course, lesson, lang), label: `${t.course} ${course.number} · ${lesson.title[lang]}` }]),
+);
+const icons = ['learn', 'build', 'ship'];
+---
+<Base title="Houston Academy" description={h.lead}>
+	<section class="bg-white">
+		<div class="mx-auto max-w-4xl px-4 pt-20 pb-16 text-center sm:pt-28">
+			<h1 class="text-4xl font-medium tracking-tight text-gray-700 sm:text-6xl">
+				<span class="grad-text">{h.title[0]}</span><br />{h.title[1]}
+			</h1>
+			<p class="mx-auto mt-6 max-w-xl text-lg leading-7 text-gray-500">{h.lead}</p>
+			<div class="mt-9 flex flex-wrap justify-center gap-3">
+				<a href={`${base}/curriculum/`} class="btn btn-outline">{h.cta}</a>
+				<a href={`${base}/courses/hello-internet/`} class="btn btn-primary">{t.getStarted} <Icon name="right" class="size-4" /></a>
+			</div>
+			<div class="mx-auto mt-6 max-w-md" data-continue data-lessons={JSON.stringify(continueTargets)} data-continue-title={t.continueTitle} hidden>
+				<a href="#" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+					<span data-continue-title class="font-medium"></span> · <span data-continue-label class="underline"></span>
+				</a>
+			</div>
+		</div>
+		<div class="mx-auto max-w-5xl px-4 pb-20" aria-hidden="true">
+			<svg viewBox="0 0 1000 120" class="w-full">
+				<path d="M20 60 C 180 0, 320 120, 500 60 S 820 0, 980 60" fill="none" stroke="#d1d5db" stroke-width="3" stroke-dasharray="8 10" />
+				{
+					courses.map((c, i) => {
+						const x = 20 + (i * 960) / (courses.length - 1);
+						const y = 60 + 40 * Math.sin((i / (courses.length - 1)) * Math.PI * 2 + Math.PI) * -0.7;
+						return (
+							<g>
+								<circle cx={x} cy={y} r="22" fill={isOpen(c) ? 'url(#g)' : '#e5e7eb'} />
+								<circle cx={x} cy={y} r="17" fill="#fff" />
+								<text x={x} y={y + 5} text-anchor="middle" font-size="15" font-weight="600" fill={isOpen(c) ? '#1f2937' : '#9ca3af'} font-family="Inter, sans-serif">{c.number}</text>
+							</g>
+						);
+					})
+				}
+				<defs>
+					<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6" /><stop offset=".5" stop-color="#818cf8" /><stop offset="1" stop-color="#f97316" /></linearGradient>
+				</defs>
+			</svg>
+		</div>
+	</section>
+
+	<section class="bg-gray-50">
+		<div class="mx-auto max-w-5xl px-4 py-20 text-center">
+			<h2 class="text-3xl font-medium text-gray-800">{h.how}</h2>
+			<p class="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">{h.howLead}</p>
+			<div class="mt-14 grid gap-12 sm:grid-cols-3">
+				{
+					h.steps.map((s, i) => (
+						<div>
+							<span class="mx-auto grid size-20 place-items-center rounded-2xl bg-white text-indigo-500 shadow-sm ring-1 ring-gray-200">
+								<Icon name={icons[i]} class="size-10" />
+							</span>
+							<h3 class="mt-6 text-xl font-medium text-gray-700">{s.title}</h3>
+							<p class="mt-2 text-sm leading-6 text-gray-600">{s.text}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="border-t border-gray-200 bg-gray-100/70">
+		<div class="mx-auto max-w-4xl px-4 py-20 text-center">
+			<h2 class="text-3xl font-medium text-gray-800">{h.explore}</h2>
+			<div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
+				{
+					courses.map((c) => {
+						const card = 'flex h-full flex-col items-center gap-4 rounded-lg bg-white px-4 py-7 shadow-sm ring-1 ring-gray-200';
+						const inner = (
+							<>
+								<Badge number={c.number} soon={!isOpen(c)} />
+								<span class:list={['text-[15px] font-medium leading-snug', isOpen(c) ? 'text-gray-700' : 'text-gray-400']}>{c.title[lang]}</span>
+								{!isOpen(c) && <span class="text-xs text-gray-400">{t.comingSoon}</span>}
+							</>
+						);
+						return isOpen(c) ? <a href={courseHref(c, lang)} class:list={[card, 'transition hover:ring-gray-300 hover:shadow']}>{inner}</a> : <div class={card}>{inner}</div>;
+					})
+				}
+			</div>
+			<a href={`${base}/curriculum/`} class="btn btn-outline mt-12">{h.exploreCta}</a>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div class="mx-auto max-w-3xl px-4 py-20 text-center">
+			<h2 class="text-3xl font-semibold text-gray-800">{h.madeBy}</h2>
+			<p class="mx-auto mt-4 max-w-xl leading-7 text-gray-600">{h.madeByLead}</p>
+			<div class="mt-8 flex flex-wrap justify-center gap-3">
+				<a href="https://github.com/gethouston/academy" class="btn btn-outline"><Icon name="github" class="size-4" /> {h.github}</a>
+				<a href="https://x.com/ja818_" class="btn btn-primary"><Icon name="x" class="size-4" /> {t.follow} @ja818_</a>
+			</div>
+		</div>
+	</section>
+</Base>

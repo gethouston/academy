@@ -1,0 +1,62 @@
+---
+title: Put it on the internet
+description: Publishing means copying your files to a computer that never sleeps. Do it by dragging your folder to Vercel.
+---
+
+import TwoComputers from '~/components/TwoComputers.astro';
+import PromptCard from '~/components/PromptCard.astro';
+import RedFlag from '~/components/RedFlag.astro';
+
+## Introduction
+
+Your page works, but only on your computer. In this lesson you'll see why, and put it on the internet, at a real address anyone can open.
+
+## Lesson overview
+
+This section contains a general overview of topics that you will learn in this lesson.
+
+- Why nobody else can see your page yet.
+- What publishing (deploying) means.
+- What servers and hosting companies are.
+- What should never go in a published folder.
+
+## Two computers
+
+Step through the picture:
+
+<TwoComputers />
+
+**Publishing**, also called **deploying**, means copying your files to a computer that never sleeps and is always connected to the internet. That computer is a **server**, and companies that rent them out are **hosting** companies. You'll use one called Vercel, which is free for projects like this.
+
+When someone opens your address, their phone asks Vercel's computer for your file, and Vercel sends it. Your laptop isn't involved anymore: close it, and the page stays up.
+
+## Everything in the folder becomes public
+
+When you publish a folder, anyone can see everything in it. If you installed the tutor, you'll also see `CLAUDE.md` and a `.academy` folder. Those are notes for your tutor (your language, your course), with nothing private in them.
+
+<RedFlag title="Publishing something private">
+	Never publish a folder that has passwords, keys, personal documents or customer data in it. Later in the program, private things get a safe place of their own.
+</RedFlag>
+
+## Assignment
+
+1. Ask Claude to check the folder first:
+
+   <PromptCard>
+   I'm about to publish this folder to the internet. Look at every file in it: is there anything I shouldn't make public? Don't change anything, just tell me.
+   </PromptCard>
+
+2. Go to [vercel.com/drop](https://vercel.com/drop) and create a free account (with your email or Google).
+3. Drag your `my-corner` folder onto the page, choose a project name, and click **Deploy**.
+4. Vercel gives you an address ending in `.vercel.app`. Open it, then open it on your phone, and send it to a friend.
+
+If you change your page later, drag the folder again: it goes up as a new copy. In Course 4 you'll connect your project so changes publish on their own.
+
+## Knowledge check
+
+The following questions are an opportunity to reflect on key topics in this lesson. If you can't answer a question, go back and read that section again.
+
+- What does publishing mean?
+- What is a server? What is a hosting company?
+- Why does your page stay online when your laptop is closed?
+- What must never be in a folder you publish?

@@ -9,7 +9,7 @@ const { id, questions } = Astro.props as {
   questions: { q: string; covers: string[] }[];
 };
 ---
-<div class="ha-explain not-content" data-explain={id}>
+<div class="ha-explain not-prose" data-explain={id}>
 	<p><strong>✍️ {t.explainBack}</strong></p>
 	{
 		questions.map((item, i) => (

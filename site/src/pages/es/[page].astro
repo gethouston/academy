@@ -1,0 +1,6 @@
+---
+import { pagePaths } from '~/data/routes';
+import Page from '~/views/Page.astro';
+export const getStaticPaths = () => pagePaths('es');
+---
+<Page {...Astro.props} />

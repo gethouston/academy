@@ -12,6 +12,12 @@ export interface Lesson {
 	kind?: 'lesson' | 'project';
 }
 
+export interface Section {
+	title: T;
+	/** How many of the course's lessons, in order, belong to this section. */
+	count: number;
+}
+
 export interface Course {
 	id: string;
 	number: number;
@@ -19,6 +25,7 @@ export interface Course {
 	ship: T;
 	hours: number;
 	lessons: Lesson[];
+	sections?: Section[];
 }
 
 export interface Level {
@@ -43,6 +50,7 @@ export const program: Level[] = [
 					es: 'Una página personal, en vivo en una URL que abres en tu celular',
 				},
 				hours: 1,
+				sections: [{ title: { en: 'Your first hour', es: 'Tu primera hora' }, count: 4 }],
 				lessons: [
 					{ slug: 'set-up-your-workbench', title: { en: 'Set up your workbench', es: 'Prepara tu mesa de trabajo' }, minutes: 15 },
 					{ slug: 'ask-for-your-page', title: { en: 'Ask for your page', es: 'Pide tu página' }, minutes: 20 },
@@ -59,6 +67,13 @@ export const program: Level[] = [
 					es: 'Una página con datos en vivo de una API, y una clave secreta bien guardada',
 				},
 				hours: 10,
+				sections: [
+					{ title: { en: 'The basics', es: 'Lo básico' }, count: 5 },
+					{ title: { en: 'Programs talking to programs', es: 'Programas que hablan con programas' }, count: 2 },
+					{ title: { en: 'Data and people', es: 'Datos y personas' }, count: 2 },
+					{ title: { en: 'Going online', es: 'En línea' }, count: 2 },
+					{ title: { en: 'AI', es: 'IA' }, count: 1 },
+				],
 				lessons: [
 					soon('Computers, files and folders, programs', 'Computadores, archivos y carpetas, programas'),
 					soon('Apps vs websites vs "the cloud"', 'Apps vs sitios web vs "la nube"'),
@@ -83,6 +98,12 @@ export const program: Level[] = [
 					es: 'El brief de tu producto, sus rebanadas y la rebanada 1 como prototipo',
 				},
 				hours: 8,
+				sections: [
+					{ title: { en: 'The idea', es: 'La idea' }, count: 4 },
+					{ title: { en: 'Slices', es: 'Rebanadas' }, count: 3 },
+					{ title: { en: 'Building with an agent', es: 'Construir con un agente' }, count: 2 },
+					{ title: { en: 'Learning from people', es: 'Aprender de las personas' }, count: 2 },
+				],
 				lessons: [
 					soon('Problem before solution', 'El problema antes que la solución'),
 					soon('Who it’s for, and what they need done', 'Para quién es, y qué necesita resolver'),
@@ -207,11 +228,23 @@ export const courses: Course[] = program.flatMap((level) => level.courses);
 export const langOf = (locale: string | undefined): Lang => (locale === 'es' ? 'es' : 'en');
 const prefix = (lang: Lang) => (lang === 'es' ? '/es' : '');
 
+export const prefixOf = prefix;
 export const courseHref = (course: Course, lang: Lang) => `${prefix(lang)}/courses/${course.id}/`;
 export const lessonHref = (course: Course, lesson: Lesson, lang: Lang) =>
 	`${prefix(lang)}/courses/${course.id}/${lesson.slug}/`;
 /** Progress key for a lesson: the same in both languages. */
 export const lessonKey = (course: Course, lesson: Lesson) => `${course.id}/${lesson.slug}`;
+
+/** The course's lessons grouped in sections (one section named after the course if none). */
+export function sectionsOf(course: Course) {
+	const sections = course.sections ?? [{ title: course.title, count: course.lessons.length }];
+	let at = 0;
+	return sections.map((section) => {
+		const lessons = course.lessons.slice(at, at + section.count).map((lesson, i) => ({ lesson, index: at + i }));
+		at += section.count;
+		return { title: section.title, lessons };
+	});
+}
 
 export const available = (course: Course) => course.lessons.filter((l) => l.slug);
 export const isOpen = (course: Course) => available(course).length > 0;
@@ -219,15 +252,6 @@ export const isOpen = (course: Course) => available(course).length > 0;
 /** Every lesson that has a page, in program order. */
 export const allLessons = courses.flatMap((course) => available(course).map((lesson) => ({ course, lesson })));
 
-/** Where a page sits in the program, from its id (e.g. "es/courses/hello-internet/apis"). */
-export function locate(id: string) {
-	const parts = id.replace(/^es\//, '').split('/');
-	if (parts[0] !== 'courses') return undefined;
-	const course = courses.find((c) => c.id === parts[1]);
-	if (!course) return undefined;
-	const lesson = parts[2] ? course.lessons.find((l) => l.slug === parts[2]) : undefined;
-	return { course, lesson, index: lesson ? course.lessons.indexOf(lesson) : -1 };
-}
 
 export const ui = {
 	en: {
@@ -235,62 +259,108 @@ export const ui = {
 		level: 'Level',
 		lesson: 'Lesson',
 		project: 'Project',
-		of: 'of',
 		lessons: 'lessons',
-		hours: 'h',
+		hours: 'hours',
 		minutes: 'min',
 		youShip: 'You’ll ship',
+		overview: 'Overview',
+		openCourse: 'Open course',
 		start: 'Start course',
 		continue: 'Continue',
 		review: 'Review',
 		comingSoon: 'Coming soon',
-		allCourses: 'All courses',
-		program: 'The program',
+		curriculum: 'Curriculum',
 		howItWorks: 'How it works',
 		glossary: 'Glossary',
+		getStarted: 'Get started',
 		markComplete: 'Mark complete',
-		completed: 'Completed ✓',
-		next: 'Next lesson',
-		prev: 'Previous lesson',
-		backToCourse: 'Back to the course',
-		nextCourse: 'Next course',
+		completed: 'Completed',
+		next: 'Next',
+		prev: 'Previous',
+		backToCourse: 'Back to course',
+		lessonContents: 'Lesson contents',
+		showLessons: 'Course lessons',
 		done: 'done',
 		continueTitle: 'Pick up where you left off',
-		startTitle: 'Start here',
 		createdBy: 'Created by',
 		follow: 'Follow on X',
 		progressNote: 'Your progress is saved in this browser.',
+		language: 'Español',
+		languageHref: 'es',
+		home: {
+			title: ['Build real software', 'without writing code'],
+			lead: 'A free, open-source program for people with no technical background. AI agents write the code; you learn everything around it, one real project at a time.',
+			cta: 'View full curriculum',
+			how: 'How it works',
+			howLead: 'Writing code is no longer the hard part. What stops people is the world around the code: what an API is, where a key should live, how a page gets onto the internet. We teach exactly that, in order.',
+			steps: [
+				{ title: 'Learn', text: 'Every concept explained with a picture, in plain words. No jargon left unexplained.' },
+				{ title: 'Build', text: 'Ask an AI agent to build it, watch what it does, and check the result. You never write code.' },
+				{ title: 'Ship', text: 'Every course ends with something real, live on the internet. The finish line is a product with real users.' },
+			],
+			explore: 'What you’ll explore',
+			exploreCta: 'Explore curriculum',
+			madeBy: 'Made in the open',
+			madeByLead: 'Houston Academy is free and open source, in English and Spanish. Follow along as it grows.',
+			github: 'View on GitHub',
+		},
+		curriculumLead: 'One path, taken in order. Each course builds on the one before it and ends with something real that you ship. From Course 2 on, you build your own product, one slice at a time. About 100 hours, part-time.',
+		pilot: 'This is an early pilot: Course 0 is complete, and Courses 1 and 2 have their first lessons.',
+		footer: { academy: 'Academy', houston: 'Houston', follow: 'Follow', tagline: 'Learn to build real software with AI agents, without writing code.' },
 	},
 	es: {
 		course: 'Curso',
 		level: 'Nivel',
 		lesson: 'Lección',
 		project: 'Proyecto',
-		of: 'de',
 		lessons: 'lecciones',
-		hours: 'h',
+		hours: 'horas',
 		minutes: 'min',
 		youShip: 'Vas a publicar',
+		overview: 'Resumen',
+		openCourse: 'Abrir curso',
 		start: 'Empezar el curso',
 		continue: 'Continuar',
 		review: 'Repasar',
 		comingSoon: 'Próximamente',
-		allCourses: 'Todos los cursos',
-		program: 'El programa',
+		curriculum: 'Programa',
 		howItWorks: 'Cómo funciona',
 		glossary: 'Glosario',
+		getStarted: 'Empezar',
 		markComplete: 'Marcar como completada',
-		completed: 'Completada ✓',
-		next: 'Siguiente lección',
-		prev: 'Lección anterior',
+		completed: 'Completada',
+		next: 'Siguiente',
+		prev: 'Anterior',
 		backToCourse: 'Volver al curso',
-		nextCourse: 'Siguiente curso',
+		lessonContents: 'Contenido de la lección',
+		showLessons: 'Lecciones del curso',
 		done: 'listas',
 		continueTitle: 'Sigue donde ibas',
-		startTitle: 'Empieza aquí',
 		createdBy: 'Creado por',
 		follow: 'Seguir en X',
 		progressNote: 'Tu progreso se guarda en este navegador.',
+		language: 'English',
+		languageHref: 'en',
+		home: {
+			title: ['Construye software real', 'sin escribir código'],
+			lead: 'Un programa gratuito y de código abierto para personas sin formación técnica. Los agentes de IA escriben el código; tú aprendes todo lo que hay alrededor, un proyecto real a la vez.',
+			cta: 'Ver el programa completo',
+			how: 'Cómo funciona',
+			howLead: 'Escribir código ya no es lo difícil. Lo que frena a la gente es el mundo alrededor del código: qué es una API, dónde debe vivir una clave, cómo llega una página a internet. Enseñamos justo eso, en orden.',
+			steps: [
+				{ title: 'Aprende', text: 'Cada concepto explicado con una imagen, en palabras sencillas. Ninguna palabra técnica sin explicar.' },
+				{ title: 'Construye', text: 'Pídele a un agente de IA que lo construya, mira lo que hace y verifica el resultado. Nunca escribes código.' },
+				{ title: 'Publica', text: 'Cada curso termina con algo real, en vivo en internet. La meta es un producto con usuarios reales.' },
+			],
+			explore: 'Lo que vas a explorar',
+			exploreCta: 'Explorar el programa',
+			madeBy: 'Hecho en abierto',
+			madeByLead: 'Houston Academy es gratis y de código abierto, en español e inglés. Síguela mientras crece.',
+			github: 'Ver en GitHub',
+		},
+		curriculumLead: 'Un solo camino, en orden. Cada curso se apoya en el anterior y termina con algo real que publicas. Desde el Curso 2 construyes tu propio producto, una rebanada a la vez. Unas 100 horas, a tiempo parcial.',
+		pilot: 'Esto es un piloto temprano: el Curso 0 está completo, y los Cursos 1 y 2 tienen sus primeras lecciones.',
+		footer: { academy: 'Academy', houston: 'Houston', follow: 'Síguenos', tagline: 'Aprende a construir software real con agentes de IA, sin escribir código.' },
 	},
 } as const;
 

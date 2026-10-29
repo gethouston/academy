@@ -1,0 +1,56 @@
+---
+title: Check it
+description: Prove your page works, let the tutor check it, and explain what you did in your own words.
+---
+
+import PromptCard from '~/components/PromptCard.astro';
+import Checklist from '~/components/Checklist.astro';
+
+## Introduction
+
+You don't prove you're done by reading code. You prove it by **looking at the real thing**. This is the project check for Course 0.
+
+## Lesson overview
+
+This section contains a general overview of topics that you will learn in this lesson.
+
+- How the tutor checks your project.
+- What "done" means for Course 0.
+
+## How the tutor checks
+
+The tutor asks for your page's address, opens it, compares it with the file in your folder, makes sure nothing private was published, and asks you one question. Then it saves a short report in your folder. It's feedback, not an exam.
+
+## Assignment
+
+1. In your `my-corner` session, send:
+
+   <PromptCard>
+   /academy:check 0
+   </PromptCard>
+
+2. Answer the tutor's question in your own words.
+3. Tick off each item below as you confirm it:
+
+<Checklist
+	id="course-0"
+	items={[
+		{ text: 'My page opens on my phone.', proof: 'The address starts with https:// and ends in .vercel.app' },
+		{ text: 'I can find index.html in my my-corner folder.' },
+		{ text: 'I made at least two changes, one at a time.' },
+		{ text: 'I read every request before clicking Allow.' },
+		{ text: '/academy:check 0 passed.', proof: 'Or: you checked the first three items yourself' },
+	]}
+/>
+
+## Knowledge check
+
+The following questions are an opportunity to reflect on key topics in this course. If you can't answer a question, go back to that lesson.
+
+- In one sentence, what does "publishing" mean?
+- Why could nobody see your page before you published it?
+- What are the four moves you used in this course? *(Ask, approve, check, publish.)*
+
+## What's next
+
+You just did, in miniature, what every project in this program does. Next, in Course 1, you'll learn how software actually works, starting with the word you'll hear the most: **API**.

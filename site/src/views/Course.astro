@@ -1,0 +1,76 @@
+---
+// A course summary, like Odin's: badge, title, overview, then sections of lessons.
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import Badge from '~/components/site/Badge.astro';
+import Icon from '~/components/site/Icon.astro';
+import { available, type Course, langOf, lessonHref, lessonKey, program, sectionsOf, ui } from '~/data/program';
+const { course, entry } = Astro.props as { course: Course; entry: CollectionEntry<'courses'> };
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+const { Content } = await render(entry);
+const level = program.find((l) => l.courses.includes(course));
+const lessons = available(course);
+const keys = lessons.map((l) => lessonKey(course, l)).join(' ');
+---
+<Base title={course.title[lang]} description={entry.data.description}>
+	<div class="mx-auto max-w-3xl px-4 py-14">
+		<div class="flex flex-col items-center text-center">
+			<Badge number={course.number} size="lg" />
+			<p class="mt-5 text-sm text-gray-500">{t.level} {level?.number} · {level?.title[lang]} · {t.course} {course.number}</p>
+			<h1 class="mt-1 text-3xl font-medium text-gray-800">{course.title[lang]}</h1>
+		</div>
+
+		<h2 class="mt-10 text-lg font-medium text-gray-700">{t.overview}</h2>
+		<div class="lesson-prose prose prose-gray mt-1 max-w-none text-gray-600"><Content /></div>
+
+		<div class="mt-6 flex flex-wrap items-center gap-4" data-progress-keys={keys} data-done-label={t.done}>
+			<a
+				class="btn btn-primary"
+				href={lessonHref(course, lessons[0], lang)}
+				data-cta-keys={keys}
+				data-hrefs={JSON.stringify(lessons.map((l) => lessonHref(course, l, lang)))}
+				data-start={t.start}
+				data-continue={t.continue}
+				data-review={t.review}
+			><span data-cta-label>{t.start}</span> <Icon name="right" class="size-4" /></a>
+			<div class="ha-bar h-1.5 max-w-56 flex-1 overflow-hidden rounded-full bg-gray-200"><div class="ha-bar-fill h-full w-0 rounded-full bg-accent" /></div>
+			<span class="text-sm text-gray-500" data-progress-text></span>
+		</div>
+
+		<div class="mt-8 space-y-6">
+			{
+				sectionsOf(course).map((section) => (
+					<section class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-200">
+						<h3 class="border-b border-gray-200 px-5 py-4 text-lg font-medium text-gray-800">{section.title[lang]}</h3>
+						<ul class="px-3 py-2">
+							{section.lessons.map(({ lesson, index }) => {
+								const row = 'flex items-center gap-3 rounded-md px-2 py-3 text-[15px]';
+								const icon = <Icon name={lesson.kind === 'project' ? 'tools' : 'book'} class="size-5 shrink-0 text-gray-400" />;
+								return lesson.slug ? (
+									<li data-lesson-key={lessonKey(course, lesson)} class="group">
+										<a href={lessonHref(course, lesson, lang)} class:list={[row, 'text-gray-700 hover:bg-gray-50 hover:text-gray-900']}>
+											{icon}
+											<span class="flex-1">{lesson.kind === 'project' ? `${t.project}: ` : ''}{lesson.title[lang]}</span>
+											{lesson.minutes && <span class="text-xs text-gray-400">{lesson.minutes} {t.minutes}</span>}
+											<span class="grid size-6 place-items-center rounded-full border border-gray-300 text-transparent group-[.is-done]:border-green-600 group-[.is-done]:bg-green-600 group-[.is-done]:text-white">
+												<Icon name="check" class="size-3.5" />
+											</span>
+										</a>
+									</li>
+								) : (
+									<li class:list={[row, 'text-gray-400']}>
+										{icon}
+										<span class="flex-1">{lesson.title[lang]}</span>
+										<span class="text-xs">{t.comingSoon}</span>
+									</li>
+								);
+							})}
+						</ul>
+					</section>
+				))
+			}
+		</div>
+	</div>
+</Base>

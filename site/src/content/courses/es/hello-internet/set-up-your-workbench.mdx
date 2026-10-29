@@ -1,0 +1,63 @@
+---
+title: Prepara tu mesa de trabajo
+description: Instala la app de escritorio de Claude, abre la pestaña Code, elige una carpeta y agrega tu tutor de la Academy.
+---
+
+import PromptCard from '~/components/PromptCard.astro';
+import RedFlag from '~/components/RedFlag.astro';
+
+## Introducción
+
+Antes de construir algo, necesitas un lugar donde construirlo. Tu mesa de trabajo es la **app de escritorio de Claude**. Su pestaña **Code** deja que Claude trabaje con los archivos de una carpeta de tu computador: crearlos, cambiarlos y mostrarte el resultado. Tú hablas, Claude hace el trabajo, y tú sigues a cargo.
+
+## Resumen de la lección
+
+Esta sección es un resumen general de los temas que vas a aprender en esta lección.
+
+- Qué es un "proyecto".
+- Cómo instalar y abrir la app de escritorio de Claude.
+- Cómo elegir una carpeta y un modo de permisos seguro.
+- Cómo agregar tu tutor de la Academy.
+
+## Un proyecto es solo una carpeta
+
+Todo lo que Claude construye para ti va en **una carpeta**. Eso es todo lo que significa "un proyecto": una carpeta con archivos adentro. Nada mágico ni escondido. La puedes abrir cuando quieras y mirar.
+
+## La pestaña Code
+
+La app de Claude tiene una pestaña **Code**. Cada conversación ahí es una **sesión**, atada a una carpeta de proyecto. Debajo del cuadro de mensaje hay una fila de controles:
+
+- el **entorno**: dónde trabaja Claude. Elige tu propio computador (local);
+- la **carpeta del proyecto**: en qué carpeta trabaja Claude;
+- el **modo**: cuánto puede hacer Claude sin preguntarte. **Manual** significa que Claude pregunta antes de crear o cambiar un archivo, o de ejecutar cualquier cosa. Es lo que quieres mientras aprendes.
+
+<RedFlag title='Hacer clic en "Allow" sin leer'>
+	En modo Manual, Claude pregunta antes de hacer cosas. **Leer esas solicitudes es tu primer trabajo como la persona a cargo.** Si alguna solicitud te confunde, no hagas clic. Pregunta: *"¿Qué hace esto, en palabras sencillas? ¿Es seguro?"*
+</RedFlag>
+
+## Tu tutor
+
+La Academy tiene un pequeño complemento para Claude, llamado **academy**. Con él instalado, el Claude con el que construyes también actúa como tu profesor: te explica qué acaba de pasar en palabras sencillas, frena los pasos riesgosos antes de que pasen y revisa tu trabajo al final de cada curso.
+
+## Tarea
+
+1. Descarga la app de Claude desde [claude.com/download](https://claude.com/download), instálala, ábrela e inicia sesión.
+2. En el Finder (Mac) o el Explorador de archivos (Windows), crea una carpeta nueva en Documentos llamada `mi-rincon`.
+3. En la app de Claude, abre la pestaña **Code**. Elige tu computador como entorno, `mi-rincon` como carpeta del proyecto y **Manual** como modo.
+4. Envía este mensaje para instalar tu tutor:
+
+   <PromptCard>
+   Por favor instálame el tutor de Houston Academy. Es un plugin de Claude Code llamado "academy", en el marketplace de plugins de GitHub gethouston/academy. Una forma es el comando "/plugin install academy --marketplace gethouston/academy". Usa la forma que funcione en esta app, y dime en palabras sencillas si tengo que hacer clic en algo o reiniciar.
+   </PromptCard>
+
+5. Abre una sesión nueva en la misma carpeta y envía `/academy:start 0`. El tutor te pregunta en qué idioma quieres trabajar y prepara tu carpeta.
+
+Si el tutor no se instala, sigue adelante: las próximas lecciones funcionan sin él.
+
+## Repaso
+
+Estas preguntas son una oportunidad para repasar los temas clave de esta lección. Si no puedes responder alguna, vuelve a leer esa sección.
+
+- ¿Qué es un proyecto, en una frase?
+- ¿Qué hace el modo **Manual**, y por qué usarlo mientras aprendes?
+- ¿Qué haces cuando una solicitud de permiso te confunde?

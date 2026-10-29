@@ -1,0 +1,63 @@
+---
+title: Set up your workbench
+description: Install the Claude desktop app, open the Code tab, choose a folder, and add your Academy tutor.
+---
+
+import PromptCard from '~/components/PromptCard.astro';
+import RedFlag from '~/components/RedFlag.astro';
+
+## Introduction
+
+Before you build anything, you need a place to build it. Your workbench is the **Claude desktop app**. Its **Code** tab lets Claude work on the files in a folder on your computer: create them, change them, and show you the result. You talk; Claude does the work; you stay in charge.
+
+## Lesson overview
+
+This section contains a general overview of topics that you will learn in this lesson.
+
+- What a "project" is.
+- How to install and open the Claude desktop app.
+- How to choose a folder and a safe permission mode.
+- How to add your Academy tutor.
+
+## A project is just a folder
+
+Everything Claude builds for you goes in **one folder**. That's all "a project" means: a folder with files in it. Nothing magic and nothing hidden. You can open it any time and look inside.
+
+## The Code tab
+
+The Claude app has a **Code** tab. Each conversation there is a **session**, tied to one project folder. Under the message box there's a row of controls:
+
+- the **environment**: where Claude works. Choose your own computer (local);
+- the **project folder**: which folder Claude works in;
+- the **mode**: how much Claude can do without asking you. **Manual** means Claude asks before it creates or changes a file, or runs anything. That's what you want while you learn.
+
+<RedFlag title='Clicking "Allow" without reading'>
+	In Manual mode Claude asks before doing things. **Reading those requests is your first job as the person in charge.** If a request ever confuses you, don't click. Ask: *"What does this do, in plain words? Is it safe?"*
+</RedFlag>
+
+## Your tutor
+
+The Academy has a small add-on for Claude, called **academy**. Once it's installed, the Claude you build with also acts as your teacher: it explains what just happened in plain words, stops risky moves before they happen, and checks your work at the end of each course.
+
+## Assignment
+
+1. Download the Claude app from [claude.com/download](https://claude.com/download), install it, open it, and sign in.
+2. In Finder (Mac) or File Explorer (Windows), create a new folder in Documents called `my-corner`.
+3. In the Claude app, open the **Code** tab. Choose your computer as the environment, `my-corner` as the project folder, and **Manual** as the mode.
+4. Send this message to install your tutor:
+
+   <PromptCard>
+   Please install the Houston Academy tutor for me. It's a Claude Code plugin called "academy", in the plugin marketplace on GitHub at gethouston/academy. One way is the command "/plugin install academy --marketplace gethouston/academy". Use whatever way works in this app, and tell me in plain words if I need to click anything or restart.
+   </PromptCard>
+
+5. Start a new session in the same folder and send `/academy:start 0`. The tutor asks which language you want and gets your folder ready.
+
+If the tutor won't install, keep going: the next lessons work without it.
+
+## Knowledge check
+
+The following questions are an opportunity to reflect on key topics in this lesson. If you can't answer a question, go back and read that section again.
+
+- What is a project, in one sentence?
+- What does the **Manual** mode do, and why use it while you learn?
+- What should you do when a permission request confuses you?

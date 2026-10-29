@@ -1,0 +1,56 @@
+---
+title: Verifícala
+description: Demuestra que tu página funciona, deja que el tutor la revise y explica con tus palabras lo que hiciste.
+---
+
+import PromptCard from '~/components/PromptCard.astro';
+import Checklist from '~/components/Checklist.astro';
+
+## Introducción
+
+No demuestras que terminaste leyendo código. Lo demuestras **mirando la cosa real**. Esta es la revisión del proyecto del Curso 0.
+
+## Resumen de la lección
+
+Esta sección es un resumen general de los temas que vas a aprender en esta lección.
+
+- Cómo revisa el tutor tu proyecto.
+- Qué significa "listo" en el Curso 0.
+
+## Cómo revisa el tutor
+
+El tutor te pide la dirección de tu página, la abre, la compara con el archivo de tu carpeta, se asegura de que no publicaste nada privado y te hace una pregunta. Después guarda un reporte corto en tu carpeta. Es retroalimentación, no un examen.
+
+## Tarea
+
+1. En tu sesión de `mi-rincon`, envía:
+
+   <PromptCard>
+   /academy:check 0
+   </PromptCard>
+
+2. Responde la pregunta del tutor con tus propias palabras.
+3. Marca cada punto a medida que lo confirmas:
+
+<Checklist
+	id="course-0"
+	items={[
+		{ text: 'Mi página abre en mi celular.', proof: 'La dirección empieza con https:// y termina en .vercel.app' },
+		{ text: 'Sé dónde está index.html en mi carpeta mi-rincon.' },
+		{ text: 'Hice al menos dos cambios, uno a la vez.' },
+		{ text: 'Leí cada solicitud antes de hacer clic en "Allow".' },
+		{ text: '/academy:check 0 pasó la revisión.', proof: 'O: verificaste tú los tres primeros puntos' },
+	]}
+/>
+
+## Repaso
+
+Estas preguntas son una oportunidad para repasar los temas clave de este curso. Si no puedes responder alguna, vuelve a esa lección.
+
+- En una frase, ¿qué significa "publicar"?
+- ¿Por qué nadie podía ver tu página antes de publicarla?
+- ¿Cuáles son los cuatro movimientos que usaste en este curso? *(Pedir, aprobar, verificar, publicar.)*
+
+## Lo que sigue
+
+Acabas de hacer, en miniatura, lo que hace cada proyecto de este programa. Ahora, en el Curso 1, vas a aprender cómo funciona de verdad el software, empezando por la palabra que más vas a oír: **API**.

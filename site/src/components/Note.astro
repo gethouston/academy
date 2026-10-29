@@ -1,0 +1,8 @@
+---
+// A quiet side note inside a lesson.
+const { title } = Astro.props as { title?: string };
+---
+<div class="not-prose my-6 rounded-lg border border-gray-200 bg-gray-50 px-5 py-4 text-[15px] leading-7 text-gray-700">
+	{title && <p class="mb-1 font-semibold text-gray-800">{title}</p>}
+	<slot />
+</div>

@@ -1,0 +1,59 @@
+---
+import { creator, langOf, prefixOf, ui } from '~/data/program';
+import Icon from './Icon.astro';
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+const base = prefixOf(lang);
+const columns = [
+	{
+		title: t.footer.academy,
+		links: [
+			{ href: `${base}/curriculum/`, label: t.curriculum },
+			{ href: `${base}/how-it-works/`, label: t.howItWorks },
+			{ href: `${base}/glossary/`, label: t.glossary },
+		],
+	},
+	{
+		title: t.footer.houston,
+		links: [
+			{ href: 'https://gethouston.ai', label: 'gethouston.ai' },
+			{ href: 'https://github.com/gethouston/academy', label: 'GitHub' },
+		],
+	},
+	{
+		title: t.footer.follow,
+		links: [{ href: creator.url, label: `X: ${creator.handle}` }],
+	},
+];
+---
+<footer class="border-t border-gray-200 bg-white">
+	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+		<div class="grid gap-10 md:grid-cols-5">
+			<div class="md:col-span-2">
+				<a href={`${base}/`} class="flex items-center gap-2.5">
+					<img src="/favicon.png" alt="" class="size-8" />
+					<span class="text-[15px] font-semibold text-gray-800">Houston Academy</span>
+				</a>
+				<p class="mt-4 max-w-xs text-sm leading-6 text-gray-600">{t.footer.tagline}</p>
+				<div class="mt-5 flex gap-4 text-gray-500">
+					<a href={creator.url} class="hover:text-gray-800" aria-label="X"><Icon name="x" /></a>
+					<a href="https://github.com/gethouston/academy" class="hover:text-gray-800" aria-label="GitHub"><Icon name="github" /></a>
+				</div>
+			</div>
+			{
+				columns.map((col) => (
+					<div>
+						<p class="text-sm font-semibold text-gray-800">{col.title}</p>
+						<ul class="mt-4 space-y-3 text-sm">
+							{col.links.map((l) => <li><a href={l.href} class="text-gray-600 hover:text-gray-900">{l.label}</a></li>)}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+		<div class="mt-12 flex flex-col gap-2 border-t border-gray-200 pt-6 text-xs text-gray-500 sm:flex-row sm:justify-between">
+			<p>© 2026 Houston Academy · CC BY-SA 4.0 (content) · MIT (code)</p>
+			<p>{t.createdBy} <a href={creator.url} class="font-medium text-gray-700 hover:text-gray-900">{creator.name} ({creator.handle})</a></p>
+		</div>
+	</div>
+</footer>

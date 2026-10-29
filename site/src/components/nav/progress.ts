@@ -74,7 +74,8 @@ export function paint() {
 	document.querySelectorAll<HTMLButtonElement>('[data-mark-complete]').forEach((b) => {
 		const isDone = Boolean(done[b.dataset.markComplete ?? '']);
 		b.setAttribute('aria-pressed', String(isDone));
-		b.textContent = (isDone ? b.dataset.completed : b.dataset.mark) ?? '';
+		const label = b.querySelector('[data-label]') ?? b;
+		label.textContent = (isDone ? b.dataset.completed : b.dataset.mark) ?? '';
 	});
 	document.querySelectorAll<HTMLElement>('[data-continue]').forEach((box) => {
 		const lessons = JSON.parse(box.dataset.lessons ?? '{}') as Record<string, { href: string; label: string }>;
@@ -83,6 +84,7 @@ export function paint() {
 		const title = box.querySelector('[data-continue-title]');
 		const label = box.querySelector('[data-continue-label]');
 		if (!target || !link) return;
+		box.hidden = false;
 		link.href = target.href;
 		if (label) label.textContent = target.label;
 		if (title) title.textContent = box.dataset.continueTitle ?? '';

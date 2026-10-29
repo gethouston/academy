@@ -1,0 +1,69 @@
+---
+title: Ask for your page
+description: Your first conversation with Claude. Ask, read the requests, see the preview, change one thing at a time.
+---
+
+import PromptCard from '~/components/PromptCard.astro';
+import Replay from '~/components/Replay.astro';
+import RedFlag from '~/components/RedFlag.astro';
+
+## Introduction
+
+Now you'll ask Claude for your page. In this lesson you'll use three moves you'll repeat in every project for the rest of the program: **asking**, **approving**, and **previewing**.
+
+## Lesson overview
+
+This section contains a general overview of topics that you will learn in this lesson.
+
+- How to ask Claude for something, clearly.
+- What a permission request looks like, and how to read it.
+- What the preview is, and what "localhost" means.
+- Why you change one thing at a time.
+
+## What usually happens
+
+When you ask for your page, Claude explains what it will do, asks permission to create a file, creates it, and opens a preview. Step through it:
+
+<Replay
+	steps={[
+		{ kind: 'you', text: 'Make me a simple personal web page in this folder…' },
+		{ kind: 'claude', text: "I'll create a single index.html with your name, role and idea, with simple styling that works on phones." },
+		{ kind: 'permission', text: 'Claude wants to create index.html in my-corner. Allow?' },
+		{ kind: 'callout', text: "Read it: it wants to create one file, inside your folder. That's exactly what you asked for, so allow it." },
+		{ kind: 'action', text: 'Created index.html' },
+		{ kind: 'claude', text: "Done! I've opened it in the Browser pane so you can see it." },
+		{ kind: 'callout', text: 'The preview shows the file from your folder. Only you can see it: it is still only on your computer.' },
+	]}
+/>
+
+## The preview, and "localhost"
+
+The preview shows your page **from your own computer**. Sometimes Claude starts a small "local server" to show it, and the address begins with `localhost`. Localhost means "this computer": your machine pretending to be a website, just for you. Nobody else can open a localhost address. You'll fix that in the next lesson.
+
+## One thing at a time
+
+If you ask for ten changes and something looks wrong, you won't know which change broke it. With one change at a time, you always know. Ask for one change, check the preview, then ask for the next. This is the first rule of the **Builder's Loop**, and you'll meet it again in Course 2.
+
+<RedFlag title="A request you don't understand">
+	For this project, Claude should only need to create and edit files in your folder. If it asks to install things, delete things, or run anything with "sudo" or "admin", don't allow it yet. Ask: *"Why do you need to do that? Is there a simpler way?"*
+</RedFlag>
+
+## Assignment
+
+1. In your `my-corner` session, change the parts in [brackets] and send:
+
+   <PromptCard>
+   Make me a simple personal web page in this folder, as one file called index.html. It should say: my name is [your name], I work as [your role], and one thing I want to build is [your idea]. Make it look clean and modern, and readable on a phone. When it's ready, show it to me in the preview.
+   </PromptCard>
+
+2. Read each permission request before you allow it.
+3. Make two changes, **one at a time**, checking the preview after each. For example: *"Make the title bigger and use a warm background color."* Then: *"Add a line at the bottom: Built with Claude, at Houston Academy."*
+4. Open your `my-corner` folder in Finder or File Explorer. Find `index.html`: that file is your page. Double-click it to open it in your browser.
+
+## Knowledge check
+
+The following questions are an opportunity to reflect on key topics in this lesson. If you can't answer a question, go back and read that section again.
+
+- Who can see your page right now, and why?
+- What does "localhost" mean?
+- Why should you change one thing at a time?

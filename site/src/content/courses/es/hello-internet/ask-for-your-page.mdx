@@ -1,0 +1,69 @@
+---
+title: Pide tu página
+description: Tu primera conversación con Claude. Pide, lee las solicitudes, mira la vista previa y cambia una cosa a la vez.
+---
+
+import PromptCard from '~/components/PromptCard.astro';
+import Replay from '~/components/Replay.astro';
+import RedFlag from '~/components/RedFlag.astro';
+
+## Introducción
+
+Ahora le vas a pedir tu página a Claude. En esta lección vas a usar tres movimientos que repetirás en todos los proyectos del programa: **pedir**, **aprobar** y **ver la vista previa**.
+
+## Resumen de la lección
+
+Esta sección es un resumen general de los temas que vas a aprender en esta lección.
+
+- Cómo pedirle algo a Claude, con claridad.
+- Cómo se ve una solicitud de permiso, y cómo leerla.
+- Qué es la vista previa, y qué significa "localhost".
+- Por qué se cambia una cosa a la vez.
+
+## Lo que suele pasar
+
+Cuando pides tu página, Claude explica lo que va a hacer, pide permiso para crear un archivo, lo crea y abre una vista previa. Avanza paso a paso:
+
+<Replay
+	steps={[
+		{ kind: 'you', text: 'Hazme una página web personal sencilla en esta carpeta…' },
+		{ kind: 'claude', text: 'Voy a crear un solo index.html con tu nombre, tu cargo y tu idea, con un estilo sencillo que funcione en celulares.' },
+		{ kind: 'permission', text: 'Claude quiere crear index.html en mi-rincon. ¿Permitir?' },
+		{ kind: 'callout', text: 'Léelo: quiere crear un archivo, dentro de tu carpeta. Es justo lo que pediste, así que permítelo.' },
+		{ kind: 'action', text: 'Creado index.html' },
+		{ kind: 'claude', text: '¡Listo! La abrí en el panel del navegador para que la veas.' },
+		{ kind: 'callout', text: 'La vista previa muestra el archivo de tu carpeta. Solo tú la puedes ver: todavía está únicamente en tu computador.' },
+	]}
+/>
+
+## La vista previa, y "localhost"
+
+La vista previa muestra tu página **desde tu propio computador**. A veces Claude inicia un pequeño "servidor local" para mostrarla, y la dirección empieza con `localhost`. Localhost significa "este computador": tu máquina haciéndose pasar por un sitio web, solo para ti. Nadie más puede abrir una dirección localhost. Eso lo arreglas en la próxima lección.
+
+## Una cosa a la vez
+
+Si pides diez cambios y algo se ve mal, no vas a saber cuál cambio lo dañó. Con un cambio a la vez, siempre lo sabes. Pide un cambio, revisa la vista previa y después pide el siguiente. Es la primera regla del **Ciclo del Constructor**, y la vas a volver a ver en el Curso 2.
+
+<RedFlag title="Una solicitud que no entiendes">
+	Para este proyecto, Claude solo debería necesitar crear y editar archivos de tu carpeta. Si pide instalar cosas, borrar cosas o ejecutar algo con "sudo" o "admin", no lo permitas todavía. Pregunta: *"¿Por qué necesitas hacer eso? ¿Hay una forma más sencilla?"*
+</RedFlag>
+
+## Tarea
+
+1. En tu sesión de `mi-rincon`, cambia lo que está entre [corchetes] y envía:
+
+   <PromptCard>
+   Hazme una página web personal sencilla en esta carpeta, en un solo archivo llamado index.html. Debe decir: me llamo [tu nombre], trabajo como [tu cargo], y algo que quiero construir es [tu idea]. Que se vea limpia y moderna, y que se lea bien en un celular. Cuando esté lista, muéstramela en la vista previa.
+   </PromptCard>
+
+2. Lee cada solicitud de permiso antes de permitirla.
+3. Haz dos cambios, **uno a la vez**, revisando la vista previa después de cada uno. Por ejemplo: *"Haz el título más grande y usa un color cálido para el fondo."* Después: *"Agrega una línea al final: Hecho con Claude, en Houston Academy."*
+4. Abre tu carpeta `mi-rincon` en el Finder o el Explorador de archivos. Busca `index.html`: ese archivo es tu página. Haz doble clic para abrirla en tu navegador.
+
+## Repaso
+
+Estas preguntas son una oportunidad para repasar los temas clave de esta lección. Si no puedes responder alguna, vuelve a leer esa sección.
+
+- ¿Quién puede ver tu página ahora mismo, y por qué?
+- ¿Qué significa "localhost"?
+- ¿Por qué cambiar una cosa a la vez?

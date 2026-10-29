@@ -1,0 +1,62 @@
+---
+title: Ponla en internet
+description: Publicar es copiar tus archivos a un computador que nunca duerme. Hazlo arrastrando tu carpeta a Vercel.
+---
+
+import TwoComputers from '~/components/TwoComputers.astro';
+import PromptCard from '~/components/PromptCard.astro';
+import RedFlag from '~/components/RedFlag.astro';
+
+## Introducción
+
+Tu página funciona, pero solo en tu computador. En esta lección vas a ver por qué, y la vas a poner en internet, en una dirección real que cualquiera puede abrir.
+
+## Resumen de la lección
+
+Esta sección es un resumen general de los temas que vas a aprender en esta lección.
+
+- Por qué nadie más puede ver tu página todavía.
+- Qué significa publicar (desplegar).
+- Qué son los servidores y las empresas de hosting.
+- Qué nunca debe ir en una carpeta publicada.
+
+## Dos computadores
+
+Avanza por la imagen paso a paso:
+
+<TwoComputers />
+
+**Publicar**, también llamado **desplegar** (en inglés *deploy*), es copiar tus archivos a un computador que nunca duerme y que está siempre conectado a internet. Ese computador es un **servidor**, y las empresas que los alquilan son empresas de **hosting**. Vas a usar una que se llama Vercel, gratis para proyectos como este.
+
+Cuando alguien abre tu dirección, su celular le pide tu archivo al computador de Vercel, y Vercel se lo envía. Tu portátil ya no participa: ciérralo y la página sigue en línea.
+
+## Todo lo que hay en la carpeta se vuelve público
+
+Cuando publicas una carpeta, cualquiera puede ver todo lo que tiene. Si instalaste el tutor, también vas a ver `CLAUDE.md` y una carpeta `.academy`. Son notas para tu tutor (tu idioma, tu curso), sin nada privado.
+
+<RedFlag title="Publicar algo privado">
+	Nunca publiques una carpeta con contraseñas, claves, documentos personales o datos de clientes. Más adelante en el programa, las cosas privadas tienen su propio lugar seguro.
+</RedFlag>
+
+## Tarea
+
+1. Pídele a Claude que revise la carpeta primero:
+
+   <PromptCard>
+   Voy a publicar esta carpeta en internet. Revisa todos los archivos que tiene: ¿hay algo que no debería hacer público? No cambies nada, solo dime.
+   </PromptCard>
+
+2. Ve a [vercel.com/drop](https://vercel.com/drop) y crea una cuenta gratuita (con tu correo o con Google).
+3. Arrastra tu carpeta `mi-rincon` a la página, escoge un nombre para el proyecto y haz clic en **Deploy**.
+4. Vercel te da una dirección que termina en `.vercel.app`. Ábrela, después ábrela en tu celular, y mándasela a alguien.
+
+Si cambias tu página después, vuelve a arrastrar la carpeta: sube como una copia nueva. En el Curso 4 vas a conectar tu proyecto para que los cambios se publiquen solos.
+
+## Repaso
+
+Estas preguntas son una oportunidad para repasar los temas clave de esta lección. Si no puedes responder alguna, vuelve a leer esa sección.
+
+- ¿Qué significa publicar?
+- ¿Qué es un servidor? ¿Qué es una empresa de hosting?
+- ¿Por qué tu página sigue en línea con el portátil cerrado?
+- ¿Qué nunca debe haber en una carpeta que publicas?

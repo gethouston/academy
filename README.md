@@ -10,7 +10,7 @@
 
 | Path | What it is |
 |---|---|
-| `site/` | The course site: Astro + Starlight. English at `/`, Spanish at `/es/`. Lessons are MDX files in `site/src/content/docs/` |
+| `site/` | The course site: Astro + MDX + Tailwind, with a clean, Odin-like layout. English at `/`, Spanish at `/es/`. Lessons are MDX files in `site/src/content/courses/<en|es>/<course>/`, and the program map (levels, courses, lessons) is `site/src/data/program.ts` |
 | `site/src/components/` | Lesson building blocks: interactive diagrams, prompt cards, checklists, illustrative agent sessions, explain-back questions |
 | `plugins/academy/` | The **academy** Claude Code plugin: the tutor that runs inside the learner's own project |
 | `.claude-plugin/marketplace.json` | Makes this repo a plugin marketplace |

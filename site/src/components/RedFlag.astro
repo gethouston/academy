@@ -6,6 +6,6 @@ const t = ui[langOf(Astro.currentLocale)];
 const { title } = Astro.props as { title: string };
 ---
 <aside class="ha-redflag" aria-label={t.redFlag}>
-	<p class="ha-redflag-title">🚩 {t.redFlag}: {title}</p>
+	<p class="ha-redflag-title">{t.redFlag}: {title}</p>
 	<slot />
 </aside>

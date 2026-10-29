@@ -1,0 +1,93 @@
+---
+// A lesson, like Odin's: course lessons on the left, the text in a narrow column,
+// "Lesson contents" on the right, and Mark complete / Next at the bottom.
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import Icon from '~/components/site/Icon.astro';
+import { allLessons, type Course, courseHref, type Lesson, langOf, lessonHref, lessonKey, sectionsOf, ui } from '~/data/program';
+const { course, lesson, entry } = Astro.props as { course: Course; lesson: Lesson; entry: CollectionEntry<'courses'> };
+const lang = langOf(Astro.currentLocale);
+const t = ui[lang];
+const { Content, headings } = await render(entry);
+const contents = headings.filter((h) => h.depth === 2);
+const at = allLessons.findIndex((x) => x.course === course && x.lesson === lesson);
+const prev = allLessons[at - 1];
+const next = allLessons[at + 1];
+const key = lessonKey(course, lesson);
+const index = course.lessons.indexOf(lesson);
+---
+<Base title={entry.data.title} description={entry.data.description}>
+	<div class="mx-auto flex max-w-7xl gap-10 px-4 sm:px-6 lg:px-8">
+		<aside class="hidden w-64 shrink-0 border-r border-gray-200 py-8 pr-6 lg:block">
+			<div class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
+				<a href={courseHref(course, lang)} class="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800"><Icon name="left" class="size-4" /> {t.backToCourse}</a>
+				<p class="mt-4 font-semibold text-gray-800">{course.title[lang]}</p>
+				<nav class="mt-4 space-y-4 text-sm">
+					{
+						sectionsOf(course).map((section) => (
+							<details open={section.lessons.some((l) => l.lesson === lesson)} class="group/section">
+								<summary class="flex cursor-pointer list-none items-center justify-between py-1 font-medium text-gray-700">
+									{section.title[lang]}
+									<Icon name="chevron" class="size-4 text-gray-400 transition group-open/section:rotate-180" />
+								</summary>
+								<ul class="mt-1 space-y-0.5">
+									{section.lessons.map(({ lesson: l }) =>
+										l.slug ? (
+											<li data-lesson-key={lessonKey(course, l)} class="group">
+												<a href={lessonHref(course, l, lang)} aria-current={l === lesson ? 'page' : undefined} class:list={['flex items-center gap-2 rounded-md px-2 py-1.5', l === lesson ? 'bg-gray-100 font-medium text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900']}>
+													<Icon name={l.kind === 'project' ? 'tools' : 'book'} class="size-4 shrink-0 text-gray-400 group-[.is-done]:hidden" />
+													<Icon name="check" class="hidden size-4 shrink-0 text-green-600 group-[.is-done]:block" />
+													{l.title[lang]}
+												</a>
+											</li>
+										) : (
+											<li class="flex items-center gap-2 px-2 py-1.5 text-gray-400"><Icon name="lock" class="size-4 shrink-0" /> {l.title[lang]}</li>
+										),
+									)}
+								</ul>
+							</details>
+						))
+					}
+				</nav>
+			</div>
+		</aside>
+
+		<article class="min-w-0 flex-1 py-10">
+			<details class="mb-6 rounded-lg bg-white ring-1 ring-gray-200 lg:hidden">
+				<summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-medium text-gray-700">{t.showLessons}: {course.title[lang]} <Icon name="chevron" class="size-4" /></summary>
+				<ul class="border-t border-gray-200 p-2 text-sm">
+					{course.lessons.map((l) => l.slug ? <li><a href={lessonHref(course, l, lang)} class:list={['block rounded px-2 py-1.5', l === lesson ? 'bg-gray-100 font-medium' : 'text-gray-600']}>{l.title[lang]}</a></li> : <li class="px-2 py-1.5 text-gray-400">{l.title[lang]}</li>)}
+				</ul>
+			</details>
+
+			<p class="text-sm text-gray-500"><a href={courseHref(course, lang)} class="hover:text-gray-800">{t.course} {course.number} · {course.title[lang]}</a> · {lesson.kind === 'project' ? t.project : t.lesson} {index + 1}</p>
+			<h1 class="mt-2 text-3xl font-semibold text-gray-800">{entry.data.title}</h1>
+			<div class="lesson-prose prose prose-gray mt-6"><Content /></div>
+
+			<div class="mx-auto mt-14 flex max-w-2xl flex-wrap items-center justify-center gap-3 border-t border-gray-200 pt-8" data-lesson-here={key}>
+				{prev && <a href={lessonHref(prev.course, prev.lesson, lang)} class="btn btn-outline" rel="prev"><Icon name="left" class="size-4" /> {t.prev}</a>}
+				<button type="button" class="btn btn-primary min-w-48" data-mark-complete={key} data-mark={t.markComplete} data-completed={`✓ ${t.completed}`}><span data-label>{t.markComplete}</span></button>
+				{next && <a href={lessonHref(next.course, next.lesson, lang)} class="btn btn-outline" rel="next">{t.next} <Icon name="right" class="size-4" /></a>}
+			</div>
+		</article>
+
+		<aside class="hidden w-56 shrink-0 py-10 xl:block">
+			{
+				contents.length > 0 && (
+					<div class="sticky top-24">
+						<p class="text-sm font-semibold text-gray-800">{t.lessonContents}</p>
+						<ul class="mt-3 space-y-2 border-l border-gray-200 text-sm">
+							{contents.map((h) => <li><a href={`#${h.slug}`} class="-ml-px block border-l border-transparent pl-4 text-gray-500 hover:border-gray-400 hover:text-gray-800">{h.text}</a></li>)}
+						</ul>
+					</div>
+				)
+			}
+		</aside>
+	</div>
+	<script>
+		import { setLast } from '~/components/nav/progress';
+		const here = document.querySelector<HTMLElement>('[data-lesson-here]');
+		if (here?.dataset.lessonHere) setLast(here.dataset.lessonHere);
+	</script>
+</Base>

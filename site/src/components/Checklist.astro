@@ -8,7 +8,7 @@ const { id, items } = Astro.props as {
   items: { text: string; proof?: string }[];
 };
 ---
-<div class="not-content" data-checklist={id} data-done={t.checklistDone} data-progress={t.checklistProgress}>
+<div class="not-prose" data-checklist={id} data-done={t.checklistDone} data-progress={t.checklistProgress}>
 	<ul class="ha-checklist">
 		{
 			items.map((item, i) => (
