@@ -6,16 +6,16 @@ const lang = langOf(Astro.currentLocale);
 const t = ui[lang];
 ---
 <Base title={t.curriculum} description={t.curriculumLead}>
-	<div class="mx-auto max-w-3xl px-5 py-16 lg:py-24">
+	<div class="mx-auto max-w-3xl px-4 py-16">
 		<div class="text-center">
-			<h1 class="display text-[40px] sm:text-[64px]">{t.curriculum}</h1>
-			<p class="mx-auto mt-5 max-w-2xl text-lg leading-[1.55] text-gray-600">{t.curriculumLead}</p>
+			<h1 class="text-3xl font-medium text-gray-800">{t.curriculum}</h1>
+			<p class="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">{t.curriculumLead}</p>
 			<p class="mx-auto mt-3 max-w-2xl text-sm text-gray-500">{t.pilot}</p>
 		</div>
 		{
 			program.map((level) => (
 				<section class="mt-14">
-					<h2 class="text-[15px] font-medium text-gray-500">
+					<h2 class="text-sm font-semibold tracking-wide text-gray-500 uppercase">
 						{t.level} {level.number} · {level.title[lang]}
 					</h2>
 					<ol class="mt-4 space-y-4">
@@ -23,7 +23,7 @@ const t = ui[lang];
 							const open = isOpen(course);
 							const keys = available(course).map((l) => lessonKey(course, l)).join(' ');
 							return (
-								<li class:list={['flex items-center gap-5 rounded-3xl bg-white p-6 ring-1 ring-black/[0.09]', { 'opacity-60': !open }]} data-progress-keys={open ? keys : undefined} data-done-label={t.done}>
+								<li class:list={['flex items-center gap-5 rounded-lg bg-white p-5 shadow-sm ring-1 ring-gray-200', { 'opacity-70': !open }]} data-progress-keys={open ? keys : undefined} data-done-label={t.done}>
 									<Badge number={course.number} soon={!open} />
 									<div class="min-w-0 flex-1">
 										<h3 class:list={['text-lg font-medium', open ? 'text-gray-800' : 'text-gray-500']}>
@@ -38,7 +38,7 @@ const t = ui[lang];
 										)}
 									</div>
 									{open ? (
-										<a href={courseHref(course, lang)} class="btn btn-sm btn-outline hidden sm:inline-flex">{t.openCourse}</a>
+										<a href={courseHref(course, lang)} class="btn btn-outline hidden sm:inline-flex">{t.openCourse}</a>
 									) : (
 										<span class="hidden text-sm text-gray-400 sm:inline">{t.comingSoon}</span>
 									)}

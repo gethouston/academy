@@ -6,4 +6,4 @@ You may share and adapt it, for any purpose, as long as you credit Houston Acade
 
 Code (the site's code, the `academy` plugin and its scripts) is under the MIT license, in [`LICENSE`](LICENSE).
 
-The Houston name and logo, and the photos in `site/public/img/`, are not covered by either license.
+The Houston name and logo are not covered by either license.
