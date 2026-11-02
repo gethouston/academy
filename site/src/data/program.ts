@@ -22,8 +22,12 @@ export interface Course {
 	id: string;
 	number: number;
 	title: T;
+	/** One or two lines on what the course covers, for the landing page. */
+	summary: T;
 	ship: T;
 	hours: number;
+	/** Shown instead of the hours when weeks say it better. */
+	duration?: T;
 	lessons: Lesson[];
 	sections?: Section[];
 }
@@ -45,6 +49,10 @@ export const program: Level[] = [
 				id: 'hello-internet',
 				number: 0,
 				title: { en: 'Hello, internet', es: 'Hola, internet' },
+				summary: {
+					en: 'Your first hour. Ask Claude for a personal page, see it in the preview, and put it on the internet.',
+					es: 'Tu primera hora. Pídele a Claude una página personal, mírala en la vista previa y ponla en internet.',
+				},
 				ship: {
 					en: 'A personal page, live at a URL you open on your phone',
 					es: 'Una página personal, en vivo en una URL que abres en tu celular',
@@ -62,6 +70,10 @@ export const program: Level[] = [
 				id: 'how-software-works',
 				number: 1,
 				title: { en: 'How software works', es: 'Cómo funciona el software' },
+				summary: {
+					en: 'Every word you’ll hear, explained with a picture: servers, APIs, keys, databases, login, hosting and AI models.',
+					es: 'Cada palabra que vas a oír, explicada con una imagen: servidores, APIs, claves, bases de datos, inicio de sesión, hosting y modelos de IA.',
+				},
 				ship: {
 					en: 'A page with live data from an API, and a secret key kept safe',
 					es: 'Una página con datos en vivo de una API, y una clave secreta bien guardada',
@@ -93,6 +105,10 @@ export const program: Level[] = [
 				id: 'think-like-a-builder',
 				number: 2,
 				title: { en: 'Think like a builder', es: 'Piensa como constructor' },
+				summary: {
+					en: 'Plan like a product builder: start from the problem, find the smallest useful version, and build one slice at a time.',
+					es: 'Planea como alguien que construye productos: parte del problema, encuentra la versión útil más pequeña y construye una rebanada a la vez.',
+				},
 				ship: {
 					en: 'Your product’s brief, its slices, and slice 1 as a prototype',
 					es: 'El brief de tu producto, sus rebanadas y la rebanada 1 como prototipo',
@@ -122,6 +138,10 @@ export const program: Level[] = [
 				id: 'your-workshop',
 				number: 3,
 				title: { en: 'Your workshop', es: 'Tu taller' },
+				summary: {
+					en: 'Get comfortable in the Claude app, read an error without panic, and use Git and GitHub as save points.',
+					es: 'Toma confianza con la app de Claude, lee un error sin pánico y usa Git y GitHub como puntos de guardado.',
+				},
 				ship: {
 					en: 'Your product on GitHub, with save points, a proposal and a rollback',
 					es: 'Tu producto en GitHub, con puntos de guardado, una propuesta y una vuelta atrás',
@@ -139,6 +159,10 @@ export const program: Level[] = [
 				id: 'going-live',
 				number: 4,
 				title: { en: 'Going live', es: 'Salir en vivo' },
+				summary: {
+					en: 'Put your product online: deploys, domains, environment variables, and a preview for every change.',
+					es: 'Pon tu producto en línea: despliegues, dominios, variables de entorno y una vista previa para cada cambio.',
+				},
 				ship: { en: 'Your product at a URL, with a preview for every change', es: 'Tu producto en una URL, con una vista previa para cada cambio' },
 				hours: 6,
 				lessons: [],
@@ -147,6 +171,10 @@ export const program: Level[] = [
 				id: 'data-that-survives',
 				number: 5,
 				title: { en: 'Data that survives', es: 'Datos que sobreviven' },
+				summary: {
+					en: 'Give your product a real database: tables, migrations, backups, and how to restore them.',
+					es: 'Dale a tu producto una base de datos real: tablas, migraciones, copias de seguridad y cómo restaurarlas.',
+				},
 				ship: { en: 'A real database, and a backup you’ve restored', es: 'Una base de datos real, y una copia de seguridad que ya restauraste' },
 				hours: 8,
 				lessons: [],
@@ -155,6 +183,10 @@ export const program: Level[] = [
 				id: 'users-and-permissions',
 				number: 6,
 				title: { en: 'Users and permissions', es: 'Usuarios y permisos' },
+				summary: {
+					en: 'Add login and roles, and lock down data so each person only sees what’s theirs.',
+					es: 'Agrega inicio de sesión y roles, y protege los datos para que cada persona solo vea lo suyo.',
+				},
 				ship: { en: 'Login and roles, where nobody sees anyone else’s data', es: 'Inicio de sesión y roles, donde nadie ve los datos de los demás' },
 				hours: 8,
 				lessons: [],
@@ -163,6 +195,10 @@ export const program: Level[] = [
 				id: 'secrets-and-security',
 				number: 7,
 				title: { en: 'Secrets and not getting hacked', es: 'Secretos y cómo no te hackeen' },
+				summary: {
+					en: 'Keep secrets secret and think like an attacker, then review your product with the agent and fix what you find.',
+					es: 'Guarda bien los secretos y piensa como un atacante; después revisa tu producto con el agente y corrige lo que encuentres.',
+				},
 				ship: { en: 'A security review of your product, with everything fixed', es: 'Una revisión de seguridad de tu producto, con todo corregido' },
 				hours: 8,
 				lessons: [],
@@ -177,6 +213,10 @@ export const program: Level[] = [
 				id: 'connecting-to-the-world',
 				number: 8,
 				title: { en: 'Connecting to the world', es: 'Conectarse con el mundo' },
+				summary: {
+					en: 'Connect to other services: APIs, webhooks, email, AI features and, if you want, payments.',
+					es: 'Conéctate con otros servicios: APIs, webhooks, correo, funciones de IA y, si quieres, pagos.',
+				},
 				ship: { en: 'Email, an AI feature, and (optional) payments', es: 'Correos, una función de IA y (opcional) pagos' },
 				hours: 8,
 				lessons: [],
@@ -185,6 +225,10 @@ export const program: Level[] = [
 				id: 'keeping-it-alive',
 				number: 9,
 				title: { en: 'Keeping it alive', es: 'Mantenerlo vivo' },
+				summary: {
+					en: 'Know when something breaks before your users do: logs, alerts, costs, backups, and an incident drill.',
+					es: 'Entérate de que algo se dañó antes que tus usuarios: registros, alertas, costos, copias de seguridad y un simulacro de incidente.',
+				},
 				ship: { en: 'Error alerts, uptime checks, cost alerts, and an incident drill', es: 'Alertas de errores, monitoreo, alertas de costos y un simulacro de incidente' },
 				hours: 6,
 				lessons: [],
@@ -193,6 +237,10 @@ export const program: Level[] = [
 				id: 'launch-and-learn',
 				number: 10,
 				title: { en: 'Launch and learn', es: 'Lanzar y aprender' },
+				summary: {
+					en: 'Get your first real users, collect feedback, and build the next slice from what they tell you.',
+					es: 'Consigue tus primeros usuarios reales, recoge sus comentarios y construye la siguiente rebanada con lo que te digan.',
+				},
 				ship: { en: 'Your first 10 real users, and one slice built from their feedback', es: 'Tus primeros 10 usuarios reales, y una rebanada hecha con lo que te dijeron' },
 				hours: 6,
 				lessons: [],
@@ -207,6 +255,10 @@ export const program: Level[] = [
 				id: 'leading-agents',
 				number: 11,
 				title: { en: 'Leading agents', es: 'Liderar agentes' },
+				summary: {
+					en: 'Run agents like a lead: write briefs, review plans, run long jobs, and check the work without reading code.',
+					es: 'Dirige agentes como un líder: escribe briefs, revisa planes, ejecuta trabajos largos y verifica el resultado sin leer código.',
+				},
 				ship: { en: 'A big feature built from a brief alone, accepted on evidence', es: 'Una función grande construida solo con un brief, aceptada con evidencia' },
 				hours: 8,
 				lessons: [],
@@ -215,8 +267,13 @@ export const program: Level[] = [
 				id: 'capstone',
 				number: 12,
 				title: { en: 'Capstone', es: 'Proyecto final' },
+				summary: {
+					en: 'Your product, live with real users for two weeks, with everything the program taught you in place.',
+					es: 'Tu producto, en vivo con usuarios reales durante dos semanas, con todo lo que aprendiste en el programa.',
+				},
 				ship: { en: 'Your product, live with real users for two weeks', es: 'Tu producto, en vivo con usuarios reales durante dos semanas' },
 				hours: 40,
+				duration: { en: '2–4 weeks', es: '2–4 semanas' },
 				lessons: [],
 			},
 		],

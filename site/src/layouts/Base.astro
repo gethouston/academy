@@ -5,7 +5,7 @@ import '~/styles/components.css';
 import Footer from '~/components/site/Footer.astro';
 import Header from '~/components/site/Header.astro';
 import { langOf } from '~/data/program';
-const { title, description } = Astro.props as { title: string; description?: string };
+const { title, description, bands = false } = Astro.props as { title: string; description?: string; /** The page opens on a black band and ends on a black footer. */ bands?: boolean };
 const lang = langOf(Astro.currentLocale);
 const fullTitle = title === 'Houston Academy' ? title : `${title} · Houston Academy`;
 ---
@@ -27,9 +27,9 @@ const fullTitle = title === 'Houston Academy' ? title : `${title} · Houston Aca
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 	</head>
 	<body class="flex min-h-screen flex-col font-sans">
-		<Header />
+		<Header dark={bands} />
 		<main class="flex-1"><slot /></main>
-		<Footer />
+		<Footer dark={bands} />
 		<script>
 			import { init } from '~/components/nav/progress';
 			init();

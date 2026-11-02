@@ -9,6 +9,8 @@ type Props = {
 	/** solid = the main action on screen; outline = everything else. */
 	kind?: 'solid' | 'outline';
 	arrow?: 'left' | 'right';
+	/** Show only the arrow, in a circle. The label becomes its accessible name. */
+	iconOnly?: boolean;
 	className?: string;
 	[attr: `data-${string}`]: unknown;
 };
@@ -19,12 +21,12 @@ const Arrow = ({ left }: { left?: boolean }) => (
 	</svg>
 );
 
-export default function Btn({ label, href, kind = 'solid', arrow, ...rest }: Props) {
+export default function Btn({ label, href, kind = 'solid', arrow, iconOnly = false, ...rest }: Props) {
 	const look = {
 		color: kind === 'solid' ? 'primary' : 'secondary',
 		variant: kind,
 		size: 'lg',
-		gutterSize: 'xl',
+		...(iconOnly ? {} : { gutterSize: 'xl' }),
 	} as const;
 	const inner = (
 		<>
@@ -33,6 +35,13 @@ export default function Btn({ label, href, kind = 'solid', arrow, ...rest }: Pro
 			{arrow === 'right' && <Arrow />}
 		</>
 	);
+	if (iconOnly) {
+		return (
+			<Button {...look} uniform aria-label={label} {...rest}>
+				<Arrow left={arrow === 'left'} />
+			</Button>
+		);
+	}
 	return href ? (
 		<ButtonLink {...look} href={href} {...rest}>
 			{inner}

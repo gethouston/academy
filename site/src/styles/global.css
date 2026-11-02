@@ -42,6 +42,69 @@
   white-space: nowrap;
 }
 
+/* Black and white bands, with hard edges, as on gethouston.ai. data-theme="dark" also flips the
+   Apps SDK buttons inside: the main button turns white. */
+.band-dark {
+  background: #0a0a0a;
+  color: rgba(255, 255, 255, 0.62);
+}
+.band-dark h1,
+.band-dark h2,
+.band-dark h3 {
+  color: #fff;
+}
+.site-nav {
+  background: rgba(255, 255, 255, 0.9);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.site-nav .wordmark > :first-child {
+  transition: color 0.3s ease;
+}
+.site-nav[data-theme="dark"] {
+  background: rgba(10, 10, 10, 0.9);
+}
+.site-nav[data-theme="dark"] .wordmark > :first-child,
+.site-footer[data-theme="dark"] .wordmark > :first-child {
+  color: #fff;
+}
+.site-nav[data-theme="dark"] nav,
+.site-nav[data-theme="dark"] summary {
+  color: rgba(255, 255, 255, 0.7);
+}
+.site-nav[data-theme="dark"] nav a:hover {
+  color: #fff;
+}
+.site-footer[data-theme="dark"] {
+  background: #0a0a0a;
+  color: rgba(255, 255, 255, 0.6);
+}
+.site-footer[data-theme="dark"] .text-ink {
+  color: #fff;
+}
+.site-footer[data-theme="dark"] .text-gray-500 {
+  color: rgba(255, 255, 255, 0.6);
+}
+.site-footer[data-theme="dark"] a:hover {
+  color: #fff;
+}
+.site-footer[data-theme="dark"] .border-line {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* The course strip: two at a time, swipe on phones */
+.course-strip {
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.course-strip::-webkit-scrollbar {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .course-strip {
+    scroll-behavior: auto;
+  }
+}
+
 /* Lesson text: the same quiet voice as the rest of the site */
 .lesson-prose {
   --tw-prose-body: var(--color-gray-600);
