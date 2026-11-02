@@ -13,8 +13,8 @@ const continueTargets = Object.fromEntries(
 const icons = ['learn', 'build', 'ship'];
 ---
 <Base title="Houston Academy" description={h.lead} bands>
-	<section class="band-dark -mt-20 pt-20" data-band="dark" data-theme="dark">
-		<div class="mx-auto max-w-3xl px-6 pt-28 pb-36 text-center sm:pt-40 sm:pb-48">
+	<section class="band band-dark -mt-20" data-band="dark" data-theme="dark">
+		<div class="mx-auto max-w-3xl px-6 py-28 text-center">
 			<h1 class="text-4xl font-medium tracking-tight text-balance sm:text-6xl sm:leading-[1.08]">{h.title[0]} <br class="hidden sm:block" />{h.title[1]}</h1>
 			<p class="mx-auto mt-8 max-w-xl text-lg leading-8">{h.lead}</p>
 			<div class="mt-12 flex flex-wrap justify-center gap-3">
@@ -29,8 +29,8 @@ const icons = ['learn', 'build', 'ship'];
 		</div>
 	</section>
 
-	<section>
-		<div class="mx-auto max-w-5xl px-6 py-32 text-center sm:py-44">
+	<section class="band">
+		<div class="mx-auto max-w-5xl px-6 py-28 text-center">
 			<h2 class="text-3xl font-medium tracking-tight text-ink">{h.how}</h2>
 			<p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-500">{h.howLead}</p>
 			<div class="mt-24 grid gap-16 sm:grid-cols-3 sm:gap-12">
@@ -47,8 +47,8 @@ const icons = ['learn', 'build', 'ship'];
 		</div>
 	</section>
 
-	<section class="band-dark" data-band="dark" data-theme="dark">
-		<div class="mx-auto max-w-4xl px-6 py-32 sm:py-44" data-strip>
+	<section class="band band-dark" data-band="dark" data-theme="dark">
+		<div class="mx-auto max-w-4xl px-6 py-28" data-strip>
 			<div class="flex items-center justify-between gap-6">
 				<h2 class="text-3xl font-medium tracking-tight">{h.explore}</h2>
 				<div class="flex shrink-0 items-center gap-2">
@@ -82,8 +82,8 @@ const icons = ['learn', 'build', 'ship'];
 		</div>
 	</section>
 
-	<section>
-		<div class="mx-auto max-w-2xl px-6 py-32 text-center sm:py-44">
+	<section class="band">
+		<div class="mx-auto max-w-2xl px-6 py-28 text-center">
 			<h2 class="text-3xl font-medium tracking-tight text-ink">{h.madeBy}</h2>
 			<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-500">{h.madeByLead}</p>
 			<div class="mt-12 flex flex-wrap justify-center gap-3">
