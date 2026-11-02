@@ -1,107 +1,98 @@
 ---
 import Base from '~/layouts/Base.astro';
-import Badge from '~/components/site/Badge.astro';
 import Icon from '~/components/site/Icon.astro';
-import { allLessons, courseHref, courses, isOpen, langOf, lessonHref, lessonKey, prefixOf, ui } from '~/data/program';
+import { allLessons, courseHref, courses, creator, isOpen, langOf, lessonHref, lessonKey, prefixOf, ui } from '~/data/program';
 const lang = langOf(Astro.currentLocale);
 const t = ui[lang];
 const h = t.home;
 const base = prefixOf(lang);
+const first = courses[0];
 const continueTargets = Object.fromEntries(
 	allLessons.map(({ course, lesson }) => [lessonKey(course, lesson), { href: lessonHref(course, lesson, lang), label: `${t.course} ${course.number} · ${lesson.title[lang]}` }]),
 );
-const icons = ['learn', 'build', 'ship'];
 ---
-<Base title="Houston Academy" description={h.lead}>
-	<section class="bg-white">
-		<div class="mx-auto max-w-4xl px-4 pt-20 pb-16 text-center sm:pt-28">
-			<h1 class="text-4xl font-medium tracking-tight text-gray-700 sm:text-6xl">
-				<span class="grad-text">{h.title[0]}</span><br />{h.title[1]}
-			</h1>
-			<p class="mx-auto mt-6 max-w-xl text-lg leading-7 text-gray-500">{h.lead}</p>
+<Base title="Houston Academy" description={h.lead} overlayNav>
+	<section class="hero">
+		<div class="hero-astro" aria-hidden="true"></div>
+		<div class="relative mx-auto flex min-h-[min(100svh,860px)] max-w-3xl flex-col items-center justify-center px-5 pt-28 pb-24 text-center">
+			<h1 class="text-[44px] leading-[1.06] font-semibold tracking-[-0.035em] text-white sm:text-[64px]">{h.title[0]}<br />{h.title[1]}</h1>
+			<p class="mt-6 max-w-[34rem] text-lg leading-[1.5] text-white/70 sm:text-[19px]">{h.lead}</p>
 			<div class="mt-9 flex flex-wrap justify-center gap-3">
-				<a href={`${base}/curriculum/`} class="btn btn-outline">{h.cta}</a>
-				<a href={`${base}/courses/hello-internet/`} class="btn btn-primary">{t.getStarted} <Icon name="right" class="size-4" /></a>
+				<a href={`${base}/courses/hello-internet/`} class="btn btn-white">{t.getStarted}</a>
+				<a href={`${base}/curriculum/`} class="btn btn-ghost">{h.cta}</a>
 			</div>
-			<div class="mx-auto mt-6 max-w-md" data-continue data-lessons={JSON.stringify(continueTargets)} data-continue-title={t.continueTitle} hidden>
-				<a href="#" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
-					<span data-continue-title class="font-medium"></span> · <span data-continue-label class="underline"></span>
+			<div class="mt-6" data-continue data-lessons={JSON.stringify(continueTargets)} data-continue-title={t.continueTitle} hidden>
+				<a href="#" class="text-[15px] text-white/60 hover:text-white">
+					<span data-continue-title></span> · <span data-continue-label></span> ›
 				</a>
 			</div>
 		</div>
-		<div class="mx-auto max-w-5xl px-4 pb-20" aria-hidden="true">
-			<svg viewBox="0 0 1000 120" class="w-full">
-				<path d="M20 60 C 180 0, 320 120, 500 60 S 820 0, 980 60" fill="none" stroke="#d1d5db" stroke-width="3" stroke-dasharray="8 10" />
-				{
-					courses.map((c, i) => {
-						const x = 20 + (i * 960) / (courses.length - 1);
-						const y = 60 + 40 * Math.sin((i / (courses.length - 1)) * Math.PI * 2 + Math.PI) * -0.7;
-						return (
-							<g>
-								<circle cx={x} cy={y} r="22" fill={isOpen(c) ? 'url(#g)' : '#e5e7eb'} />
-								<circle cx={x} cy={y} r="17" fill="#fff" />
-								<text x={x} y={y + 5} text-anchor="middle" font-size="15" font-weight="600" fill={isOpen(c) ? '#1f2937' : '#9ca3af'} font-family="Inter, sans-serif">{c.number}</text>
-							</g>
-						);
-					})
-				}
-				<defs>
-					<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6" /><stop offset=".5" stop-color="#818cf8" /><stop offset="1" stop-color="#f97316" /></linearGradient>
-				</defs>
-			</svg>
+	</section>
+
+	<section class="mx-auto grid max-w-[1120px] items-center gap-14 px-5 py-20 md:grid-cols-2 lg:px-[52px] lg:py-[104px]">
+		<div>
+			<h2 class="text-[34px] leading-[1.2] font-[340] tracking-[-0.015em] text-gray-500">{h.statement[0]}</h2>
+			<p class="mt-5 text-[34px] leading-[1.2] font-normal tracking-[-0.015em] text-ink-strong">{h.statement[1]}</p>
+		</div>
+		<a href={courseHref(first, lang)} class="block rounded-3xl bg-white p-7 shadow-[0_24px_64px_-24px_rgba(0,0,0,0.22)] ring-1 ring-black/[0.09] transition hover:ring-black/20">
+			<p class="text-sm text-gray-500">{h.firstCourse} · {t.course} {first.number}</p>
+			<p class="mt-1 text-xl font-medium text-ink-strong">{first.title[lang]}</p>
+			<ul class="mt-5 space-y-2.5">
+				{first.lessons.map((l) => <li class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[15px] ring-1 ring-black/[0.09]"><Icon name={l.kind === 'project' ? 'tools' : 'book'} class="size-5 text-gray-500" /><span class="flex-1">{l.title[lang]}</span><span class="text-xs text-gray-500">{l.minutes} {t.minutes}</span></li>)}
+			</ul>
+		</a>
+	</section>
+
+	<section class="mx-auto max-w-[1120px] px-5 pb-20 lg:px-[52px] lg:pb-[104px]">
+		<h2 class="display text-[40px] sm:text-[56px]">{h.how}</h2>
+		<p class="mt-5 max-w-2xl text-lg leading-[1.55] text-gray-600">{h.howLead}</p>
+		<div class="mt-12 grid gap-8 sm:grid-cols-3">
+			{
+				h.steps.map((s) => (
+					<div class="border-t border-black/[0.16] pt-5">
+						<h3 class="text-[23px] font-medium tracking-[-0.02em] text-ink-strong">{s.title}</h3>
+						<p class="mt-2 text-[15px] leading-[1.6] text-gray-600">{s.text}</p>
+					</div>
+				))
+			}
 		</div>
 	</section>
 
-	<section class="bg-gray-50">
-		<div class="mx-auto max-w-5xl px-4 py-20 text-center">
-			<h2 class="text-3xl font-medium text-gray-800">{h.how}</h2>
-			<p class="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">{h.howLead}</p>
-			<div class="mt-14 grid gap-12 sm:grid-cols-3">
-				{
-					h.steps.map((s, i) => (
-						<div>
-							<span class="mx-auto grid size-20 place-items-center rounded-2xl bg-white text-indigo-500 shadow-sm ring-1 ring-gray-200">
-								<Icon name={icons[i]} class="size-10" />
-							</span>
-							<h3 class="mt-6 text-xl font-medium text-gray-700">{s.title}</h3>
-							<p class="mt-2 text-sm leading-6 text-gray-600">{s.text}</p>
-						</div>
-					))
-				}
-			</div>
-		</div>
-	</section>
-
-	<section class="border-t border-gray-200 bg-gray-100/70">
-		<div class="mx-auto max-w-4xl px-4 py-20 text-center">
-			<h2 class="text-3xl font-medium text-gray-800">{h.explore}</h2>
-			<div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
+	<section class="on-dark bg-band">
+		<div class="mx-auto max-w-[1120px] px-5 py-20 text-center lg:px-[52px] lg:py-[104px]">
+			<h2 class="display text-[40px] sm:text-[56px]">{h.explore}</h2>
+			<div class="mt-12 grid grid-cols-2 gap-3 text-left md:grid-cols-3 lg:grid-cols-4">
 				{
 					courses.map((c) => {
-						const card = 'flex h-full flex-col items-center gap-4 rounded-lg bg-white px-4 py-7 shadow-sm ring-1 ring-gray-200';
+						const open = isOpen(c);
+						const card = 'flex min-h-40 flex-col justify-between rounded-2xl p-5 ring-1';
 						const inner = (
 							<>
-								<Badge number={c.number} soon={!isOpen(c)} />
-								<span class:list={['text-[15px] font-medium leading-snug', isOpen(c) ? 'text-gray-700' : 'text-gray-400']}>{c.title[lang]}</span>
-								{!isOpen(c) && <span class="text-xs text-gray-400">{t.comingSoon}</span>}
+								<span class:list={['text-[40px] leading-none font-[340] tracking-[-0.03em]', open ? 'text-white' : 'text-white/30']}>{c.number}</span>
+								<span>
+									<span class:list={['block text-[15px] leading-snug font-medium', open ? 'text-white' : 'text-white/45']}>{c.title[lang]}</span>
+									{!open && <span class="mt-1 block text-xs text-white/35">{t.comingSoon}</span>}
+								</span>
 							</>
 						);
-						return isOpen(c) ? <a href={courseHref(c, lang)} class:list={[card, 'transition hover:ring-gray-300 hover:shadow']}>{inner}</a> : <div class={card}>{inner}</div>;
+						return open ? <a href={courseHref(c, lang)} class:list={[card, 'bg-white/[0.07] ring-white/15 transition hover:bg-white/[0.12]']}>{inner}</a> : <div class:list={[card, 'ring-white/[0.08]']}>{inner}</div>;
 					})
 				}
 			</div>
-			<a href={`${base}/curriculum/`} class="btn btn-outline mt-12">{h.exploreCta}</a>
+			<a href={`${base}/curriculum/`} class="btn btn-white mt-12">{h.exploreCta}</a>
 		</div>
 	</section>
 
-	<section class="bg-white">
-		<div class="mx-auto max-w-3xl px-4 py-20 text-center">
-			<h2 class="text-3xl font-semibold text-gray-800">{h.madeBy}</h2>
-			<p class="mx-auto mt-4 max-w-xl leading-7 text-gray-600">{h.madeByLead}</p>
-			<div class="mt-8 flex flex-wrap justify-center gap-3">
-				<a href="https://github.com/gethouston/academy" class="btn btn-outline"><Icon name="github" class="size-4" /> {h.github}</a>
-				<a href="https://x.com/ja818_" class="btn btn-primary"><Icon name="x" class="size-4" /> {t.follow} @ja818_</a>
-			</div>
+	<section class="mx-auto max-w-2xl px-5 py-20 text-center lg:py-[104px]">
+		<h2 class="display text-[40px] sm:text-[56px]">{h.madeBy}</h2>
+		<p class="mx-auto mt-5 max-w-lg text-lg leading-[1.55] text-gray-600">{h.madeByLead}</p>
+		<p class="mt-7 inline-flex items-center gap-3 text-[15px] text-gray-600">
+			<img src="/img/julian-96.webp" alt="" width="40" height="40" class="size-10 rounded-full" />
+			<span>{t.createdBy} <a href={creator.url} class="font-medium text-ink-strong underline underline-offset-2">{creator.name}</a></span>
+		</p>
+		<div class="mt-7 flex flex-wrap justify-center gap-3">
+			<a href={creator.url} class="btn btn-primary"><Icon name="x" class="size-4" /> {t.follow} {creator.handle}</a>
+			<a href="https://github.com/gethouston/academy" class="btn btn-outline"><Icon name="github" class="size-[18px]" /> {h.github}</a>
 		</div>
 	</section>
 </Base>

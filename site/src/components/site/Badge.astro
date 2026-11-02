@@ -1,8 +1,6 @@
 ---
-// A course badge: the course number in a ring, like Odin's course emblems.
+// A course badge: the course number in an ink circle.
 const { number, soon = false, size = 'md' } = Astro.props as { number: number; soon?: boolean; size?: 'md' | 'lg' };
-const box = size === 'lg' ? 'size-24 text-3xl' : 'size-16 text-xl';
+const box = size === 'lg' ? 'size-20 text-3xl' : 'size-14 text-xl';
 ---
-<span class:list={['grid shrink-0 place-items-center rounded-full p-1', box, soon ? 'bg-gray-200' : 'bg-gradient-to-br from-blue-500 via-indigo-400 to-orange-500']}>
-	<span class:list={['grid size-full place-items-center rounded-full font-semibold', soon ? 'bg-gray-50 text-gray-400' : 'bg-white text-gray-800']}>{number}</span>
-</span>
+<span class:list={['grid shrink-0 place-items-center rounded-full font-[340]', box, soon ? 'bg-gray-50 text-gray-400 ring-1 ring-black/10' : 'bg-ink-strong text-white']}>{number}</span>
