@@ -41,7 +41,9 @@ const config = {
 	trailingSlashBehavior: 'ADD',
 	headers: [
 		{ glob: '**', headers: security },
-		{ glob: '**/*.html', headers: { 'Cache-Control': 'public, max-age=60, must-revalidate' } },
+		// Pages are served at clean URLs ("/curriculum/"), so a *.html rule wouldn't match them: short
+		// cache everywhere, then long cache for the hashed assets, which never change.
+		{ glob: '**', headers: { 'Cache-Control': 'public, max-age=60, must-revalidate' } },
 		{ glob: '/_astro/**', headers: { 'Cache-Control': 'public, max-age=31536000, immutable' } },
 	],
 };
