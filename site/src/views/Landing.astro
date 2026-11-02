@@ -69,7 +69,7 @@ const icons = ['learn', 'build', 'ship'];
 								<p class="mt-5 text-[15px] leading-7">{c.summary[lang]}</p>
 								<p class="mt-5 flex-1 text-[15px] leading-7"><span class="text-white">{t.youShip}:</span> {c.ship[lang]}</p>
 								<div class="mt-8">
-									{open ? <Btn href={courseHref(c, lang)} label={t.openCourse} kind="outline" arrow="right" /> : <span class="inline-flex h-9 items-center text-sm text-white/40">{t.comingSoon}</span>}
+									{open ? <Btn href={courseHref(c, lang)} label={t.openCourse} kind="outline" arrow="right" /> : <span class="inline-flex h-10 items-center text-sm text-white/40">{t.comingSoon}</span>}
 								</div>
 							</li>
 						);

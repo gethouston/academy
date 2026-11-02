@@ -1,4 +1,4 @@
-// Every button on the site: OpenAI's Apps SDK UI Button at size lg (36px, fully rounded).
+// Every button on the site: OpenAI's Apps SDK UI Button at size xl (40px, fully rounded).
 // Rendered to plain HTML at build time. Extra data-* props pass through for our small scripts,
 // which restyle a button by changing its data-color and data-variant.
 import { Button, ButtonLink } from '@openai/apps-sdk-ui/components/Button';
@@ -25,7 +25,7 @@ export default function Btn({ label, href, kind = 'solid', arrow, iconOnly = fal
 	const look = {
 		color: kind === 'solid' ? 'primary' : 'secondary',
 		variant: kind,
-		size: 'lg',
+		size: 'xl',
 		...(iconOnly ? {} : { gutterSize: 'xl' }),
 	} as const;
 	const inner = (
