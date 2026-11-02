@@ -26,34 +26,33 @@ const columns = [
 	},
 ];
 ---
-<footer class="border-t border-gray-200 bg-white">
-	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+<footer class="border-t border-line">
+	<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10">
 		<div class="grid gap-10 md:grid-cols-5">
 			<div class="md:col-span-2">
 				<a href={`${base}/`} class="flex items-center gap-2.5">
-					<img src="/favicon.png" alt="" class="size-8" />
-					<span class="text-[15px] font-semibold text-gray-800">Houston Academy</span>
+					<span class="text-[15px] font-semibold text-ink">Houston Academy</span>
 				</a>
-				<p class="mt-4 max-w-xs text-sm leading-6 text-gray-600">{t.footer.tagline}</p>
+				<p class="mt-4 max-w-xs text-sm leading-6 text-gray-500">{t.footer.tagline}</p>
 				<div class="mt-5 flex gap-4 text-gray-500">
-					<a href={creator.url} class="hover:text-gray-800" aria-label="X"><Icon name="x" /></a>
-					<a href="https://github.com/gethouston/academy" class="hover:text-gray-800" aria-label="GitHub"><Icon name="github" /></a>
+					<a href={creator.url} class="hover:text-ink" aria-label="X"><Icon name="x" /></a>
+					<a href="https://github.com/gethouston/academy" class="hover:text-ink" aria-label="GitHub"><Icon name="github" /></a>
 				</div>
 			</div>
 			{
 				columns.map((col) => (
 					<div>
-						<p class="text-sm font-semibold text-gray-800">{col.title}</p>
+						<p class="text-sm font-semibold text-ink">{col.title}</p>
 						<ul class="mt-4 space-y-3 text-sm">
-							{col.links.map((l) => <li><a href={l.href} class="text-gray-600 hover:text-gray-900">{l.label}</a></li>)}
+							{col.links.map((l) => <li><a href={l.href} class="text-gray-500 hover:text-gray-900">{l.label}</a></li>)}
 						</ul>
 					</div>
 				))
 			}
 		</div>
-		<div class="mt-12 flex flex-col gap-2 border-t border-gray-200 pt-6 text-xs text-gray-500 sm:flex-row sm:justify-between">
+		<div class="mt-16 flex flex-col gap-2 border-t border-line pt-8 text-xs text-gray-500 sm:flex-row sm:justify-between">
 			<p>© 2026 Houston Academy · CC BY-SA 4.0 (content) · MIT (code)</p>
-			<p>{t.createdBy} <a href={creator.url} class="font-medium text-gray-700 hover:text-gray-900">{creator.name} ({creator.handle})</a></p>
+			<p>{t.createdBy} <a href={creator.url} class="font-medium text-ink hover:text-gray-900">{creator.name} ({creator.handle})</a></p>
 		</div>
 	</div>
 </footer>

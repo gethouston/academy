@@ -7,16 +7,16 @@ const lang = langOf(Astro.currentLocale);
 const t = {
   en: {
     you: "Your computer",
-    folder: "📁 my-corner",
+    folder: "my-corner",
     file: "index.html",
     preview: "Preview: only you",
-    closed: "💤 Laptop closed",
+    closed: "Laptop closed",
     server: ["A computer that", "never sleeps"],
     vercel: "Vercel, a hosting company",
-    copy: "📁 copy of my-corner",
+    copy: "copy of my-corner",
     url: "my-corner.vercel.app",
-    phone: "📱 Your phone",
-    friend: "🧑 A friend, anywhere",
+    phone: "Your phone",
+    friend: "A friend, anywhere",
     captions: [
       "Your page lives in a folder on your computer. The preview pane shows it, but only to you.",
       "It's like a drawing on your desk: nobody else can see it.",
@@ -28,16 +28,16 @@ const t = {
   },
   es: {
     you: "Tu computador",
-    folder: "📁 mi-rincon",
+    folder: "mi-rincon",
     file: "index.html",
     preview: "Vista previa: solo tú",
-    closed: "💤 Portátil cerrado",
+    closed: "Portátil cerrado",
     server: ["Un computador que", "nunca duerme"],
     vercel: "Vercel, una empresa de hosting",
-    copy: "📁 copia de mi-rincon",
+    copy: "copia de mi-rincon",
     url: "mi-rincon.vercel.app",
-    phone: "📱 Tu celular",
-    friend: "🧑 Alguien, en cualquier lugar",
+    phone: "Tu celular",
+    friend: "Alguien, en cualquier lugar",
     captions: [
       "Tu página vive en una carpeta de tu computador. El panel de vista previa la muestra, pero solo a ti.",
       "Es como un dibujo sobre tu escritorio: nadie más lo puede ver.",
@@ -58,13 +58,13 @@ const t = {
 		<text class="sub" x="56" y="120">└ {t.file}</text>
 		<g data-on="1,2,4,5">
 			<rect x="40" y="135" width="210" height="58" rx="8" fill="none" stroke="var(--ha-blue)" stroke-width="2" />
-			<text class="sub" x="54" y="169">👀 {t.preview}</text>
+			<text class="sub" x="54" y="169">{t.preview}</text>
 		</g>
 		<g data-on="3,6">
 			<rect x="20" y="40" width="250" height="170" rx="14" fill="var(--ha-surface)" opacity="0.85" />
 			<text class="label" x="82" y="132">{t.closed}</text>
 		</g>
-		<text data-on="2" x="200" y="248" class="sub">🖼️ …</text>
+		<text data-on="2" x="200" y="248" class="sub">…</text>
 
 		<!-- the copy across -->
 		<path class="wire" data-hl="4" d="M270 125 C 340 125, 380 125, 450 125" />
@@ -77,7 +77,7 @@ const t = {
 		<text class="sub" x="470" y="106">{t.vercel}</text>
 		<g data-on="4,5,6">
 			<text class="sub" x="470" y="138">{t.copy}</text>
-			<text class="label" x="470" y="180" style="fill:var(--sl-color-accent)">🌐 {t.url}</text>
+			<text class="label" x="470" y="180" style="fill:var(--sl-color-accent)">{t.url}</text>
 		</g>
 
 		<!-- visitors -->

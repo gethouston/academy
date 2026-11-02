@@ -1,5 +1,6 @@
 ---
 // A prompt the learner copies into Claude. Put the prompt text as the slot.
+import Btn from "./site/Btn";
 import { langOf, ui } from "./ui";
 
 const t = ui[langOf(Astro.currentLocale)];
@@ -8,7 +9,7 @@ const { label } = Astro.props as { label?: string };
 <div class="ha-prompt not-prose">
 	<div class="ha-prompt-head">
 		<span>{label ?? t.prompt}</span>
-		<button type="button" class="ha-btn" data-copy data-copied={t.copied}>{t.copy}</button>
+		<Btn label={t.copy} kind="outline" data-copy data-copied={t.copied} />
 	</div>
 	<div class="ha-prompt-text" data-prompt><slot /></div>
 </div>
@@ -16,13 +17,16 @@ const { label } = Astro.props as { label?: string };
 	document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => {
 		if (b.dataset.ready) return;
 		b.dataset.ready = '1';
-		const label = b.textContent;
+		const label = b.querySelector('[data-label]');
+		const original = label?.textContent ?? '';
 		b.addEventListener('click', async () => {
 			const text = b.closest('.ha-prompt')?.querySelector('[data-prompt]')?.textContent?.trim() ?? '';
 			try {
 				await navigator.clipboard.writeText(text);
-				b.textContent = b.dataset.copied ?? label;
-				setTimeout(() => (b.textContent = label), 1500);
+				if (label) label.textContent = b.dataset.copied ?? original;
+				setTimeout(() => {
+					if (label) label.textContent = original;
+				}, 1500);
 			} catch {
 				/* clipboard blocked: the text is still selectable */
 			}

@@ -42,8 +42,11 @@ export function initSteppers() {
         if (count) count.textContent = `${step} / ${total}`;
         fig.querySelectorAll<HTMLButtonElement>("[data-act]").forEach((b) => {
           const act = b.dataset.act;
-          if (act === "back") b.disabled = step <= 1;
-          if (act === "next") b.disabled = step >= total;
+          if (act === "back" || act === "next") {
+            const off = act === "back" ? step <= 1 : step >= total;
+            b.disabled = off;
+            b.toggleAttribute("data-disabled", off);
+          }
           if (act === "goto")
             b.setAttribute(
               "aria-pressed",

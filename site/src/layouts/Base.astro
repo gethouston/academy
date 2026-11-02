@@ -1,15 +1,16 @@
 ---
-import Footer from '~/components/site/Footer.astro';
-import Header from '~/components/site/Header.astro';
+// Stylesheets first: the Apps SDK needs its layers defined before any component's styles.
 import '~/styles/global.css';
 import '~/styles/components.css';
+import Footer from '~/components/site/Footer.astro';
+import Header from '~/components/site/Header.astro';
 import { langOf } from '~/data/program';
 const { title, description } = Astro.props as { title: string; description?: string };
 const lang = langOf(Astro.currentLocale);
 const fullTitle = title === 'Houston Academy' ? title : `${title} · Houston Academy`;
 ---
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-theme="light">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />

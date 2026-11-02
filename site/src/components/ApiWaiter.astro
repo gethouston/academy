@@ -12,11 +12,11 @@ const t = {
     apiSub: "the waiter",
     server: "The weather company's server",
     serverSub: "the kitchen",
-    menu: "📜 Menu = API docs",
+    menu: "Menu = API docs",
     menuSub: '"weather for {city}"',
     req: '"Weather for Medellín, please"',
     res: '"24°C, cloudy"',
-    screen: "☁️ 24°C",
+    screen: "24°C",
     captions: [
       "Your app wants today's weather, but the weather data lives on another company's computer.",
       "That company publishes a menu: the API documentation. It lists exactly what you can ask for, and how.",
@@ -33,11 +33,11 @@ const t = {
     apiSub: "el mesero",
     server: "El servidor de la empresa del clima",
     serverSub: "la cocina",
-    menu: "📜 Menú = docs de la API",
+    menu: "Menú = docs de la API",
     menuSub: '"clima para {ciudad}"',
     req: '"El clima de Medellín, por favor"',
     res: '"24 °C, nublado"',
-    screen: "☁️ 24 °C",
+    screen: "24 °C",
     captions: [
       "Tu app quiere el clima de hoy, pero los datos del clima viven en el computador de otra empresa.",
       "Esa empresa publica un menú: la documentación de la API. Dice exactamente qué puedes pedir y cómo.",
@@ -52,18 +52,18 @@ const t = {
 <figure class="ha-figure not-prose" data-stepper data-captions={JSON.stringify(t.captions)}>
 	<div class="ha-svg"><svg viewBox="0 0 720 300" role="img" aria-label={t.captions.join(' ')}>
 		<rect class="box" data-hl="1,3,6" x="20" y="50" width="170" height="130" rx="14" />
-		<text class="label" x="40" y="82">📱 {t.app}</text>
+		<text class="label" x="40" y="82">{t.app}</text>
 		<text class="sub" x="40" y="104">{t.appSub}</text>
 		<g data-on="6">
 			<text class="label" x="48" y="150" style="font-size:24px">{t.screen}</text>
 		</g>
 
 		<rect class="box" data-hl="3,4,5" x="275" y="50" width="170" height="130" rx="14" />
-		<text class="label" x="295" y="82">🤵 {t.api}</text>
+		<text class="label" x="295" y="82">{t.api}</text>
 		<text class="sub" x="295" y="104">{t.apiSub}</text>
 
 		<rect class="box" data-hl="1,4" x="530" y="50" width="170" height="130" rx="14" />
-		<text class="label" x="546" y="82">🍳 {t.serverSub}</text>
+		<text class="label" x="546" y="82">{t.serverSub}</text>
 		<foreignObject x="546" y="92" width="145" height="70">
 			<div style="font-size:12.5px;color:var(--ha-muted);font-family:var(--sl-font)">{t.server}</div>
 		</foreignObject>

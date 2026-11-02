@@ -68,12 +68,15 @@ export function paint() {
 		const i = keys.findIndex((k) => !done[k]);
 		const all = keys.length > 0 && i === -1;
 		a.href = hrefs[all ? 0 : Math.max(i, 0)] ?? a.href;
-		const label = a.querySelector('[data-cta-label]') ?? a;
+		const label = a.querySelector('[data-label]') ?? a;
 		label.textContent = (all ? a.dataset.review : started ? a.dataset.continue : a.dataset.start) ?? '';
 	});
 	document.querySelectorAll<HTMLButtonElement>('[data-mark-complete]').forEach((b) => {
 		const isDone = Boolean(done[b.dataset.markComplete ?? '']);
 		b.setAttribute('aria-pressed', String(isDone));
+		// Apps SDK buttons draw from these attributes: done reads as a quiet outline.
+		b.dataset.variant = isDone ? 'outline' : 'solid';
+		b.dataset.color = isDone ? 'secondary' : 'primary';
 		const label = b.querySelector('[data-label]') ?? b;
 		label.textContent = (isDone ? b.dataset.completed : b.dataset.mark) ?? '';
 	});
