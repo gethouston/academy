@@ -32,9 +32,19 @@
   }
 }
 
-/* Lesson text: comfortable size, long lines of air, quiet headings */
+/* The wordmark: the same type as "Houston" in gethouston.ai's top bar */
+.wordmark {
+  font-family: "General Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+/* Lesson text: the same quiet voice as the rest of the site */
 .lesson-prose {
-  --tw-prose-body: var(--color-gray-700);
+  --tw-prose-body: var(--color-gray-600);
   --tw-prose-headings: var(--color-ink);
   --tw-prose-links: var(--color-ink);
   --tw-prose-bold: var(--color-ink);
@@ -55,15 +65,21 @@
   margin-block: 0.6em;
 }
 .lesson-prose h2 {
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-top: 3.5em;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-top: 4em;
   margin-bottom: 1em;
 }
 .lesson-prose h3 {
   font-size: 1.0625rem;
-  font-weight: 600;
+  font-weight: 500;
+}
+.lesson-prose strong {
+  font-weight: 500;
+}
+.lesson-prose > :first-child {
+  margin-top: 0;
 }
 .lesson-prose code {
   background: var(--color-gray-100);

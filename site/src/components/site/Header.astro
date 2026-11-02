@@ -15,9 +15,7 @@ const links = [
 ---
 <header class="sticky top-0 z-30 bg-white/90 backdrop-blur">
 	<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-		<a href={`${base}/`} class="flex items-center gap-2.5">
-			<span class="text-[15px] font-semibold tracking-tight text-ink">Houston Academy</span>
-		</a>
+		<a href={`${base}/`} class="wordmark"><span>Houston</span> <span class="text-[#8a8a8a]">Academy</span></a>
 		<nav class="hidden items-center gap-8 text-sm text-gray-500 md:flex">
 			{links.map((l) => <a href={l.href} class:list={['hover:text-gray-900', { 'text-gray-900 font-medium': path.startsWith(l.href) }]}>{l.label}</a>)}
 			<a href={otherPath} class="flex items-center gap-1 hover:text-gray-900" lang={t.languageHref}><Icon name="globe" class="size-4" />{t.language}</a>

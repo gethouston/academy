@@ -20,7 +20,7 @@ const prefix: Record<Kind, string> = {
   flag: "",
 };
 ---
-<div class="ha-replay not-prose ha-figure" style="padding:0" data-stepper data-captions={JSON.stringify(captions)}>
+<div class="ha-replay not-prose ha-figure" data-stepper data-captions={JSON.stringify(captions)}>
 	<div class="ha-replay-bar">
 		<span>▶ {title ?? t.replay}</span>
 		<span>{t.replayNote}</span>
@@ -38,7 +38,7 @@ const prefix: Record<Kind, string> = {
 			))
 		}
 	</div>
-	<div style="padding:0 1.5rem 1.5rem">
+	<div>
 		<div class="ha-controls">
 			<Btn label={t.back} kind="outline" arrow="left" data-act="back" />
 			<Btn label={t.next} arrow="right" data-act="next" />
